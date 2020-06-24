@@ -1,0 +1,65 @@
+str,en_US,ar_DZ,de_DE,ru_RU
+nearBy,NearBy,حولى ,Hallo,Привет!
+check,Check,اكتشف,Hallo,Привет!
+chat,Chat, الدردشة,Hallo {} in der {} welt ,Привет! {} добро пожаловать {} мир!
+activities,Activities,النشاطات,{} ist in {lang} geschrieben,{} написан на языке {lang}
+me,Me,  حسابي ,Click mich,Нажми на меня
+searchTitle,Search for nearby places,ابحث عن الاماكن القريبة,Password zurГјcksetzten,Сбросить пароль
+nearRest,Nearby Restaurants : ,المطاعم المجاورة : ,Name,Логин
+searchBar,Check,بحث,Password,Пароль
+shopping,Shopping,تسوق ,Du hast {} mal geklickt,Ты кликнул {} раз!
+accounting,Accounting Us,محاسبة ,Du hast {} mal geklickt,Ты кликнул {} раз!
+coffeeShops,Coffee Shop,مقاهى,Du hast {} mal geklickt,Ты кликнул {} раза!
+restaurants,Restaurants,مطاعم,Du hast {} mal geklickt,Ты кликнул {} раз!
+pharmacy,Pharmacy , صيدليات,Du hast {} mal geklickt,Ты кликнул {} раз!
+logout,Logout ,تسجيل الخروج,Du hast {} mal geklickt,Ты кликнул {} раз!
+hospital,Hospital, مستشفيات ,Deine Klicks: {},Твой счет : {}
+gas,Gas Station,محطات بنزين,Deine Klicks: {},Твой счет : {}
+filter,Filter ,  ترتيب حسب,Deine Klicks: {},Твой счет : {}
+messages,Messages  , الرسائل,Deine Klicks: {},Твой счет : {}
+chats,Chats  , الدردشة,Deine Klicks: {},Твой счет : {}
+groups,Groups,  المجموعات,Deine Klicks: {},Твой счет : {}
+changeName,Change your Name , تغيير الاسم,Deine Klicks: {},Твой счет : {}
+changePhoto,Change your Photo ,تغيير الصورة,Hi Mann ;) ,Привет мужык ;)
+description,Change your Number, تغيير رقم الهاتف,Hallo Frau :),Привет девчуля :)
+myShop,My Shop,المحل الخاص بي,Hi Mann ;) {},Привет мужык ;) {}
+addShop,Add Shop,  إضافة محل  ,Hi Mann ;) {},Привет мужык ;) {}
+country,Country,الدولة  ,Hi Mann ;) {},Привет мужык ;) {}
+shopInfo,Required Information,بيانات المحل (إلزامية)  ,Hi Mann ;) {},Привет мужык ;) {}
+shopName,Shop Name  ,اسم المحل    ,Hi Mann ;) {},Привет мужык ;) {}
+shopPhone,Shop Phone  ,هاتف المحل   ,Hi Mann ;) {},Привет мужык ;) {}
+shopLocation,Shop Location   ,موقع المحل   ,Hi Mann ;) {},Привет мужык ;) {}
+shopCategory,Shop Category  ,نوع المحل   ,Hi Mann ;) {},Привет мужык ;) {}
+serviceType,Service Type  ,نوع الخدمة   ,Hi Mann ;) {},Привет мужык ;) {}
+priceLevel, Price Level ,    مستوى السعر    ,Hi Mann ;) {},Привет мужык ;) {}
+addPhoto,add Image ,   إضافة صورة,Deine Klicks: {},Твой счет : {}
+shopTime,Open shop in all days start: ,  مواعيد المحل في جميع أيام الأسبوع :,Deine Klicks: {},Твой счет : {}
+from,From : , من :  ,Deine Klicks: {},Твой счет : {}
+to,To :  , إلى :  ,Deine Klicks: {},Твой счет : {}
+optionalInfo,Optional Information,معلومات إضافية (إختياري),Deine Klicks: {},Твой счет : {}
+webSite,webSite ,  الموقع الإلكترونى ,Deine Klicks: {},Твой счет : {}
+register,Register , تسجيل ,Deine Klicks: {},Твой счет : {}
+free,free , مجانى ,Deine Klicks: {},Твой счет : {}
+inexpensive,inexpensive , رخيص ,Deine Klicks: {},Твой счет : {}
+moderate,moderate , متوسط ,Deine Klicks: {},Твой счет : {}
+expensive,expensive ,ٍغالى,Deine Klicks: {},Твой счет : {}
+veryExpensive,veryExpensive , غالى جداً ,Deine Klicks: {},Твой счет : {}
+myShopAlert, You do not have Shop yet !,ليس لديك محل حتى الان !,Hi Mann ;) {},Привет мужык ;) {}
+friendsList,Friends,الأصدقاء,Hallo Frau :) {},Привет девчуля :) {}
+findF,Find Friends,البحث عن الأصدقاء,Hallo Frau :) {},Привет девчуля :) {}
+friends,Friends,الأصدقاء,Hallo Frau :) {},Привет девчуля :) {}
+friendRequests,Friend Requests,طلبات الصداقة,Gespeicherte Sprache zurГјcksettzen,Сбросить сохраненный язык
+collections,Collections,الألبومات,Gespeicherte Sprache zurГјcksettzen,Сбросить сохраненный язык
+myCollections,My Collections,ألبوماتى,Gespeicherte Sprache zurГјcksettzen,Сбросить сохраненный язык
+noCollections,There are no following collections yet,لا يوجد ألبومات حتى الان,Gespeicherte Sprache zurГјcksettzen,Сбросить сохраненный язык
+noActivities,There are no Activities yet,لا يوجد نشاطات حتى الان,Gespeicherte Sprache zurГјcksettzen,Сбросить сохраненный язык
+friendsCollections,Following Collections,الألبومات المتابعة,Gespeicherte Sprache zurГјcksettzen,Сбросить сохраненный язык
+more,More,المزيد,Gespeicherte Sprache zurГјcksettzen,Сбросить сохраненный язык
+redoSearch,Redo Search for this Location,اعادة البحث لهذا الموقع,Gespeicherte Sprache zurГјcksettzen,Сбросить сохраненный язык
+searchForLocation,Search For Location,ابحث عن الموقع,Gespeicherte Sprache zurГјcksettzen,Сбросить сохраненный язык
+language,Language,اللغة,Gespeicherte Sprache zurГјcksettzen,Сбросить сохраненный язык
+cancel,cancel,إلغاء,Gespeicherte Sprache zurГјcksettzen,Сбросить сохраненный язык
+sendMessage,Send a Message ... ,اكتب رسالة ...,Gespeicherte Sprache zurГјcksettzen,Сбросить сохраненный язык
+currentLocation,Current Location,الموقع الحالى,Gespeicherte Sprache zurГјcksettzen,Сбросить сохраненный язык
+addShopDescription,Want to add your own shop ?,هل تريد إضافة المحل الخاص بك ؟,Gespeicherte Sprache zurГјcksettzen,Сбросить сохраненный язык
+youCanAddShop,Here you can use this application to make poeple find you shop ..., بإستخدام هذا التطبيق يمكن للمستخدمين العثور على المحل الخاص بك ... ,Gespeicherte Sprache zurГјcksettzen,Сбросить сохраненный язык
