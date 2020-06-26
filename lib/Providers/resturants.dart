@@ -842,7 +842,7 @@ print(id);
             'nameOfCollection': nameOfCollection.toString(),
             'LastUpdate': DateTime.now().toIso8601String(),
             'categoryImage':
-                'https://devblog.axway.com/wp-content/uploads/blog-572x320-image-device.png',
+                'https://logisticaas.com.mx/wp-content/uploads/2020/05/placeholder-1.png',
             'countOfCategory': 0,
             'isPublic': isPublic,
           });
@@ -935,7 +935,7 @@ print(id);
     }
   }
 
-  Future<bool> removeCollection({String collectionName}) async {
+  Future<bool> removeCollection({String collectionName,bool isPublic =false}) async {
     try {
       String userId;
       if (Auth.userId == '') {
@@ -949,6 +949,16 @@ print(id);
           .document(userId)
           .collection('collections');
       userCollection.document(collectionName.toString()).delete();
+      if(isPublic){
+       QuerySnapshot allUsers=await databaseReference.collection('users').getDocuments();
+       for(int i =0; i<allUsers.documents.length;i++){
+       CollectionReference followCollection=  databaseReference.collection('users').document(allUsers.documents[i].documentID).collection('FollowingCollections');
+       DocumentSnapshot doc =await followCollection.document(collectionName.toString()).get();
+       if(doc.exists &&doc !=null){
+         await followCollection.document(collectionName.toString()).delete();
+       }
+       }
+      }
       return true;
     } catch (_) {
       return false;
@@ -1125,7 +1135,7 @@ print(id);
         if (imgUrl == img[0]) {
           await userCollection.document(collectionName).updateData({
             'categoryImage':
-                'https://devblog.axway.com/wp-content/uploads/blog-572x320-image-device.png',
+                'https://logisticaas.com.mx/wp-content/uploads/2020/05/placeholder-1.png',
             'countOfCategory': n,
           });
         }
@@ -1233,7 +1243,7 @@ print(id);
   }
 
   Future<void> updateTransactionsForCategory(
-      {Review review, Category category, String type}) async {
+      {Review review, Category category, String type,bool chage}) async {
     final databaseReference = Firestore.instance;
     CollectionReference categoryCollection = databaseReference
         .collection(category.underCategory)
@@ -1247,8 +1257,14 @@ print(id);
     int usefulNum = x.documents[0]['useful'];
     int coolNum = x.documents[0]['cool'];
     int funnyNum = x.documents[0]['funny'];
+    print(usefulNum);
+    print(coolNum);
+    print(funnyNum);
+
     if (type == 'useful') {
-      review.isUseful = !review.isUseful;
+      if( review.isUseful == false){
+        review.isUseful = true;
+      }
       if (review.isUseful) {
         usefulNum = usefulNum + 1;
       } else {
@@ -1256,19 +1272,22 @@ print(id);
           usefulNum = usefulNum - 1;
         }
       }
-      if (x.documents[0]['isCool']) {
-        coolNum = coolNum - 1;
-        review.isColl = false;
-        review.cool = coolNum;
-      }
-      if (x.documents[0]['isFunny']) {
-        funnyNum = funnyNum - 1;
-        review.isFunny = false;
-        review.funny = funnyNum;
-      }
+//      if (x.documents[0]['isCool']) {
+//        coolNum = coolNum - 1;
+//        review.isColl = false;
+//        review.cool = coolNum;
+//      }
+//      if (x.documents[0]['isFunny']) {
+//        funnyNum = funnyNum - 1;
+//        review.isFunny = false;
+//        review.funny = funnyNum;
+//      }
       review.useful = usefulNum;
       review.isColl = false;
       review.isFunny = false;
+      print(usefulNum);
+      print(coolNum);
+      print(funnyNum);
       databaseReference
           .collection(category.underCategory)
           .document(category.id)
@@ -1277,13 +1296,16 @@ print(id);
           .updateData({
         'useful': usefulNum,
         'isUseful': review.isUseful,
-        'cool': coolNum,
+//        'cool': coolNum,
         'isCool': false,
-        'funny': funnyNum,
+//        'funny': funnyNum,
         'isFunny': false,
       });
     } else if (type == 'cool') {
-      review.isColl = !review.isColl;
+      if(  review.isColl == false){
+        review.isColl = true;
+      }
+
       if (review.isColl) {
         coolNum = coolNum + 1;
       } else {
@@ -1291,17 +1313,19 @@ print(id);
           coolNum = coolNum - 1;
         }
       }
-      if (x.documents[0]['isFunny']) {
-        funnyNum = funnyNum - 1;
-        review.isFunny = false;
-        review.funny = funnyNum;
-      }
-      if (x.documents[0]['isUseful']) {
-        usefulNum = usefulNum - 1;
-        review.isUseful = false;
-        review.useful = usefulNum;
-      }
+//      if (x.documents[0]['isFunny']) {
+//        funnyNum = funnyNum - 1;
+//        review.isFunny = false;
+//        review.funny = funnyNum;
+//      }
+//      if (x.documents[0]['isUseful']) {
+//        usefulNum = usefulNum - 1;
+//        review.isUseful = false;
+//        review.useful = usefulNum;
+//      }
       review.cool = coolNum;
+      review.isFunny = false;
+      review.isUseful = false;
       databaseReference
           .collection(category.underCategory)
           .document(category.id)
@@ -1310,13 +1334,15 @@ print(id);
           .updateData({
         'cool': coolNum,
         'isCool': review.isColl,
-        'funny': funnyNum,
+//        'funny': funnyNum,
         'isFunny': false,
-        'useful': usefulNum,
+//        'useful': usefulNum,
         'isUseful': false,
       });
     } else {
-      review.isFunny = !review.isFunny;
+      if(   review.isFunny  == false){
+        review.isFunny  = true;
+      }
       if (review.isFunny) {
         funnyNum = funnyNum + 1;
       } else {
@@ -1325,17 +1351,19 @@ print(id);
         }
       }
 
-      if (x.documents[0]['isCool']) {
-        coolNum = coolNum - 1;
-        review.isColl = false;
-        review.cool = coolNum;
-      }
-      if (x.documents[0]['isUseful']) {
-        usefulNum = usefulNum - 1;
-        review.isUseful = false;
-        review.useful = usefulNum;
-      }
+//      if (x.documents[0]['isCool']) {
+//        coolNum = coolNum - 1;
+//        review.isColl = false;
+//        review.cool = coolNum;
+//      }
+//      if (x.documents[0]['isUseful']) {
+//        usefulNum = usefulNum - 1;
+//        review.isUseful = false;
+//        review.useful = usefulNum;
+//      }
       review.funny = funnyNum;
+      review.isColl = false;
+      review.isUseful = false;
       databaseReference
           .collection(category.underCategory)
           .document(category.id)
@@ -1344,12 +1372,13 @@ print(id);
           .updateData({
         'funny': funnyNum,
         'isFunny': review.isFunny,
-        'useful': usefulNum,
+//        'useful': usefulNum,
         'isUseful': false,
-        'cool': coolNum,
+//        'cool': coolNum,
         'isCool': false,
       });
     }
+    chage=true;
     notifyListeners();
   }
 
