@@ -181,7 +181,7 @@ bool isOpened=false;
                           Positioned(
                               top: 0.0,
                               left: 55,
-                              right: 35,
+                              right: 55,
                               child: Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: SizedBox(
