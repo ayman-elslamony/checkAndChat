@@ -93,11 +93,14 @@ Future<void>  _refreshToGetFriends() async{
                       ),
                       Padding(
                         padding: EdgeInsets.only(bottom: _width * 0.01),
-                        child: Text(
-                          '$address',
-                          style: TextStyle(
-                              color: Colors.grey[600],
-                              fontSize: _width * 0.025),
+                        child: SizedBox(
+                          width: _width*0.5,
+                          child: Text(
+                            '$address',
+                            style: TextStyle(
+                                color: Colors.grey[600],
+                                fontSize: _width * 0.025),
+                          ),
                         ),
                       ),
                       Row(
@@ -209,10 +212,11 @@ Future<void>  _refreshToGetFriends() async{
                         child: value == '' && dataSnapshot.allFriends.length==0
                             ? Center(
                             child: Text(
-                              'there are no friends yet',
+                              LocaleKeys.noFriends.tr(),
                               style: TextStyle(
                                   color: Colors.grey[700],
                                   fontSize: 18,
+                                  fontFamily: 'Cairo',
                                   fontWeight: FontWeight.bold),
                             ))
                             : ListView.builder(
@@ -257,8 +261,8 @@ Future<void>  _refreshToGetFriends() async{
                   child: TextFormField(
                     autofocus: false,
                     decoration: InputDecoration(
-                      hintText: 'Search For Friends',
-                      hintStyle: TextStyle(fontSize: _width * 0.04),
+                      hintText: LocaleKeys.search.tr(),
+                      hintStyle: TextStyle(fontSize: _width * 0.035,fontFamily: 'Cairo'),
                       disabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(4),
                           borderSide: BorderSide(color: Colors.grey[400])),

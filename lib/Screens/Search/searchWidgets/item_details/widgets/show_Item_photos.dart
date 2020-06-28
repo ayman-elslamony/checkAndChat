@@ -143,7 +143,32 @@ ListOfPhotos _listOfPhotos;
           }
         }
     }
+Future deletePhoto(String val,UserPhotoForSpecificCategory userPhotoForSpecificCategory) async{
+      if (val == 'Delete') {
+        await  Provider.of<Categorys>(context,
+            listen: false)
+            .deletePhoto(
+            resturant: widget.category,
+            photosForSpecificCategory:userPhotoForSpecificCategory
+        )
+            .then((x) {
+          if (x == 'true') {
+            Toast.show(
+                "successfully deleted!", context,
+                duration: Toast.LENGTH_SHORT,
+                gravity: Toast.BOTTOM);
+          } else if (x == 'false') {
+            Toast.show(
+                "failed to delete!", context,
+                duration: Toast.LENGTH_SHORT,
+                gravity: Toast.BOTTOM);
+          }
+        });
+        setState(() {
 
+        });
+      }
+    }
     void openImagePicker() {
       showModalBottomSheet(
           backgroundColor: Colors.white,
@@ -275,9 +300,9 @@ ListOfPhotos _listOfPhotos;
                     ),
                   ),
                   body:  TabBarView(controller: _tabController, children: [
-                    ShowPhotos(category: widget.category,photosType: 'All',photosForSpecificCategory: _listOfPhotos.getPhotos(listType: 'All'),addPhotos: openImagePicker,userId: widget.userId,),
-                    ShowPhotos(category: widget.category,photosType: 'Owner',photosForSpecificCategory: _listOfPhotos.getPhotos(listType: 'Owner'),addPhotos: openImagePicker,userId: widget.userId,),
-                    ShowPhotos(category: widget.category,photosType: 'Users',photosForSpecificCategory: _listOfPhotos.getPhotos(listType: 'Users'),addPhotos: openImagePicker,userId: widget.userId,),
+                    ShowPhotos(category: widget.category,photosType: 'All',deletePhoto: deletePhoto,photosForSpecificCategory: _listOfPhotos.getPhotos(listType: 'All'),addPhotos: openImagePicker,userId: widget.userId,),
+                    ShowPhotos(category: widget.category,photosType: 'Owner',deletePhoto: deletePhoto,photosForSpecificCategory: _listOfPhotos.getPhotos(listType: 'Owner'),addPhotos: openImagePicker,userId: widget.userId,),
+                    ShowPhotos(category: widget.category,photosType: 'Users',deletePhoto: deletePhoto,photosForSpecificCategory: _listOfPhotos.getPhotos(listType: 'Users'),addPhotos: openImagePicker,userId: widget.userId,),
                   ]),
                 );
               }

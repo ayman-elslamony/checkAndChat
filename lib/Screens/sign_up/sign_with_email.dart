@@ -131,9 +131,9 @@ class _SignWithEmailState extends State<SignWithEmail> {
           );
         });
   }
-  getLocation(BuildContext context) {
+  getLocation(BuildContext context) async{
     try {
-      Provider.of<Auth>(context, listen: false).getLocation();
+      await Provider.of<Auth>(context, listen: false).getLocation();
     } on HttpException catch (error) {
       switch (error.toString()) {
         case "PERMISSION_DENIED":
@@ -172,6 +172,7 @@ class _SignWithEmailState extends State<SignWithEmail> {
       ),
     );
   }
+
   @override
   Widget build(BuildContext context) {
 
@@ -202,9 +203,9 @@ class _SignWithEmailState extends State<SignWithEmail> {
         try{
           bool auth =await Provider.of<Auth>(context, listen: false).signUpUsingEmail(imgUrl: imgUrl.trim(),name: name.trim(),email: email.trim(),password: password.trim());
           if(auth ==true){
+            await getLocation(context);
             Toast.show("successfully Sign Up", context, duration: Toast.LENGTH_SHORT, gravity:  Toast.BOTTOM);
             Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=>HomeScreen()));
-            getLocation(context);
           }
         }on HttpException catch (error) {
           setState(() {
@@ -469,7 +470,7 @@ class _SignWithEmailState extends State<SignWithEmail> {
                 ),
                 RaisedButton(
                   color: Colors.blue,
-                  onPressed: _isSignUpSuccessful?(){}:_submit,
+                  onPressed: _isSignUpSuccessful?null:_submit,
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.all(Radius.circular(10))),
                   child: Padding(

@@ -26,7 +26,7 @@ class _CollectionsState extends State<Collections> {
     double _width = MediaQuery.of(context).size.width;
 
     Widget _createCollectionCard(
-        {String collectionId,Widget image, String name, Function function, int count,String friendId,String imgUrlForCollection,
+        {int index,String collectionId,Widget image, String name, Function function, int count,String friendId,String imgUrlForCollection,bool isPublic=false,
           bool isMeFollowing,
           String lastUpdate}) {
       return InkWell(
@@ -70,26 +70,57 @@ class _CollectionsState extends State<Collections> {
                             trailing: isMeFollowing!=null?RaisedButton(
                               onPressed: () async{
                                 if(isMeFollowing){
-                                  await Provider.of<Categorys>(context,listen: false).deleteFromFollowingCollections(
+                                  bool x =await Provider.of<Categorys>(context,listen: false).deleteFromFollowingCollections(
                                     collectionId: collectionId,
                                   );
+                                  if(x){
+                                    setState(() {
+                                      isMeFollowing = false;
+                                    });
+                                  }
                                 }else{
-                                  await Provider.of<Categorys>(context,listen: false).addToFollowingCollections(
+                                  bool x =await Provider.of<Categorys>(context,listen: false).addToFollowingCollections(
                                     friendId: friendId,
                                     collectionId: collectionId,
                                   );
+                                  if(x){
+                                    setState(() {
+                                      isMeFollowing = true;
+                                    });
+                                  }
                                 }
 
                               },
-                              color: Colors.white30,
+                              color: Colors.transparent,
+                              elevation: 0,
                               child: Text(
-                                isMeFollowing?'UnFollow':'Follow',
+                                isMeFollowing?LocaleKeys.unFollow.tr():LocaleKeys.follow.tr(),
                                 style: TextStyle(
                                     fontSize: 14,
                                     fontWeight: FontWeight.w800,
-                                    color: Colors.white),
+                                    color: Colors.white,
+                                  fontFamily: 'Cairo'
+                                ),
                               ),
-                            ):SizedBox(),
+                            ):IconButton(icon: Icon(Icons.delete,color: Colors.red,), onPressed:  () async {
+                              bool x = await Provider.of<Categorys>(context,
+                                  listen: false)
+                                  .removeCollection(
+                                  collectionName:name,isPublic: isPublic);
+                              if (x == true) {
+                                Toast.show(LocaleKeys.remove.tr(), context,
+                                    duration: Toast.LENGTH_LONG,
+                                    gravity: Toast.BOTTOM);
+                                    setState(() {
+
+                                    });
+                              } else {
+                                Toast.show(LocaleKeys.tryAgain.tr(), context,
+                                    duration: Toast.LENGTH_SHORT,
+                                    gravity: Toast.BOTTOM);
+                              }
+                            },
+                            )
                           ),
                         )),
                   ],
@@ -271,6 +302,7 @@ class _CollectionsState extends State<Collections> {
                             child: ListView.builder(
                               itemBuilder: (context, index) =>
                                   _createCollectionCard(
+                                    index: index,
                                 function: () {
                                   Navigator.of(context).push(MaterialPageRoute(
                                       builder: (context) => ContentOfCollection(
@@ -303,9 +335,12 @@ class _CollectionsState extends State<Collections> {
                                   height: _height * 0.3,
                                   width: _width * 0.7,
                                 ),
+                                    isPublic: dataSnapshot.data[index]
+                                    ['isPublic'],
                               ),
                               itemCount: dataSnapshot.data.length,
                               scrollDirection: Axis.horizontal,
+
                             ),
                           );
                         }

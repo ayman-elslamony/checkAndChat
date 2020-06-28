@@ -10,6 +10,8 @@ import 'package:provider/provider.dart';
 import 'package:toast/toast.dart';
 import 'package:checkandchat/Screens/Me/meWidgets/user_location.dart';
 import 'package:checkandchat/generated/locale_keys.g.dart';
+import 'package:easy_localization/easy_localization.dart';
+
 
 class StartReview extends StatefulWidget {
   Category category;
@@ -119,12 +121,12 @@ class _StartReviewState extends State<StartReview> {
             padding: EdgeInsets.all(10.0),
             child: Column(children: [
               Text(
-                'Pick an Image',
+                LocaleKeys.pickImage,
                 style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 18,
                     color: Colors.red),
-              ),
+              ).tr(context: context),
               SizedBox(
                 height: 5.0,
               ),
@@ -141,9 +143,9 @@ class _StartReviewState extends State<StartReview> {
                     color: Colors.blue,
                     textColor: Theme.of(context).primaryColor,
                     label: Text(
-                      'Use Camera',
+                      LocaleKeys.camera,
                       style: TextStyle(color: Colors.white),
-                    ),
+                    ).tr(context: context),
                     onPressed: () {
                       _getImage(context, ImageSource.camera);
                       // Navigator.of(context).pop();
@@ -159,9 +161,9 @@ class _StartReviewState extends State<StartReview> {
                     color: Colors.blue,
                     textColor: Theme.of(context).primaryColor,
                     label: Text(
-                      'Use Gallery',
+                      LocaleKeys.pickImage,
                       style: TextStyle(color: Colors.white),
-                    ),
+                    ).tr(context: context),
                     onPressed: () {
                       _getImage(context, ImageSource.gallery);
                       // Navigator.of(context).pop();
@@ -596,8 +598,9 @@ class _StartReviewState extends State<StartReview> {
                     decoration: InputDecoration(
                       contentPadding: const EdgeInsets.all(20.0),
                         border: InputBorder.none,
+                        hintStyle: TextStyle(fontFamily: 'cairo'),
                         hintText:
-                            'Example: This is probably my favorite steakhouse in town'),
+                            LocaleKeys.example.tr()),
                     focusNode: _focusNode,
                     onChanged: (val){
                       _writeReview = val;
@@ -622,7 +625,7 @@ class _StartReviewState extends State<StartReview> {
                         padding: const EdgeInsets.symmetric(vertical: 9.0,horizontal: 12),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.center,
                           children: <Widget>[
                             ImageIcon(
                                 AssetImage(
@@ -630,8 +633,8 @@ class _StartReviewState extends State<StartReview> {
                                 color: Colors.grey[700],
                                 size: 20),
                             Text(
-                              'Add',
-                              style: TextStyle(fontSize: 12, color: Colors.grey[700]),
+                              LocaleKeys.addPhoto.tr(),
+                              style: TextStyle(fontSize: 12, color: Colors.grey[700],fontFamily: 'Cairo'),
                             )
                           ],
                         )
@@ -704,11 +707,13 @@ class _StartReviewState extends State<StartReview> {
                       elevation: 0.0,
                       onPressed: _isLoadingReview?(){}:_startReviewFunction,
                       child: _isLoadingReview?CircularProgressIndicator(backgroundColor: Colors.blue,):Text(
-                        'POST REVIEW',
+                        LocaleKeys.postReview.tr(),
                         style: TextStyle(
                             color: Colors.blue,
                             fontSize: 16,
-                            fontWeight: FontWeight.bold),
+                            fontWeight: FontWeight.bold,
+                            fontFamily: 'Cairo'
+                        ),
                       ),
                     )
                   ],

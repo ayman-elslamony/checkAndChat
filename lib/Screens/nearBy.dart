@@ -4,6 +4,7 @@ import 'package:checkandchat/Providers/resturants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../Providers/change_index_page.dart';
 import 'Search/searchWidgets/item_details/item_details.dart';
 import '../models/http_exception.dart';
@@ -66,7 +67,7 @@ class _NearByState extends State<NearBy> {
         _isPlacesGetting = true;
       });
     } else {
-      getLocationAndPOlaces();
+      getPlaces();
     }
   }
 
@@ -77,42 +78,7 @@ class _NearByState extends State<NearBy> {
     }
     return _listImg;
   }
-
-  String errorMessage = '';
-
-  void _showErrorDialogLocation(String message) {
-    showDialog(
-      context: context,
-      builder: (ctx) => AlertDialog(
-        title: Text('An Error Occurred!'),
-        content: Text(message),
-        actions: <Widget>[
-          FlatButton(
-            child: Text('Enable Now'),
-            onPressed: () {
-              getLocation();
-              Navigator.of(ctx).pop();
-            },
-          ),
-          FlatButton(
-            child: Text('Cancel'),
-            onPressed: () {
-              Navigator.of(ctx).pop();
-            },
-          )
-        ],
-      ),
-    );
-  }
-
-  getLocationAndPOlaces() async {
-    if (_auth.myLatLng == null) {
-      await getLocation();
-    }
-    setState(() {
-      _isLocationGet = true;
-    });
-    print(_auth.myLatLng);
+  getPlaces() async {
     if (Provider.of<Categorys>(context, listen: false).nearByYou.length == 0) {
       _resturant = await Provider.of<Categorys>(context, listen: false)
           .getNearbyPlaces(
@@ -120,35 +86,19 @@ class _NearByState extends State<NearBy> {
               currentLocation: _auth.myLatLng,
               isCommingFromNearby: true);
       setState(() {
-        _isPlacesGetting = true;
+        _isLocationGet = true;
         _isPlacesGetting = true;
       });
     } else {
       _resturant = Provider.of<Categorys>(context, listen: false).nearByYou;
       setState(() {
+        _isLocationGet = true;
         _isPlacesGetting = true;
       });
     }
     print('_resturant.length${_resturant.length}');
   }
 
-  getLocation() async {
-    try {
-      await Provider.of<Auth>(context, listen: false).getLocation();
-    } on HttpException catch (error) {
-      switch (error.toString()) {
-        case "PERMISSION_DENIED":
-          errorMessage = "Please enable Your Location";
-          break;
-        default:
-          errorMessage = "An undefined Error happened.";
-      }
-      _showErrorDialogLocation(errorMessage);
-    } catch (error) {
-      const errorMessage = 'Could not get your location. Please try again.';
-      _showErrorDialogLocation(errorMessage);
-    }
-  }
 
   Future<void> _onRefresh() async {
     _resturant = await Provider.of<Categorys>(context, listen: false)
@@ -157,7 +107,7 @@ class _NearByState extends State<NearBy> {
             currentLocation: _auth.myLatLng,
             isCommingFromNearby: true);
     setState(() {
-      _isPlacesGetting = true;
+      _isLocationGet = true;
       _isPlacesGetting = true;
     });
   }
@@ -343,32 +293,32 @@ class _NearByState extends State<NearBy> {
                             ],
                           ),
                         ),
-                  Center(
-                    child: InkWell(
-                      onTap: result.phone == ''
-                          ? null
-                          : () {
-                              launch("tel:${result.phone}");
-                            },
-                      child: Container(
-                        width: _width * 0.9,
-                        height: 38.0,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(5.0),
-                            border: Border.all(color: Colors.grey)),
-                        child: Center(
-                          child: Text(
-                            'Call',
-                            style: _textStyle.copyWith(
-                                color: result.phone == ''
-                                    ? Colors.grey
-                                    : Colors.blue,
-                                fontSize: _width * 0.05),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
+//                  Center(
+//                    child: InkWell(
+//                      onTap: result.phone == ''
+//                          ? null
+//                          : () {
+//                              launch("tel:${result.phone}");
+//                            },
+//                      child: Container(
+//                        width: _width * 0.9,
+//                        height: 38.0,
+//                        decoration: BoxDecoration(
+//                            borderRadius: BorderRadius.circular(5.0),
+//                            border: Border.all(color: Colors.grey)),
+//                        child: Center(
+//                          child: Text(
+//                            'Call',
+//                            style: _textStyle.copyWith(
+//                                color: result.phone == ''
+//                                    ? Colors.grey
+//                                    : Colors.blue,
+//                                fontSize: _width * 0.05),
+//                          ),
+//                        ),
+//                      ),
+//                    ),
+//                  ),
                   SizedBox(
                     height: 10,
                   )
@@ -560,7 +510,7 @@ class _NearByState extends State<NearBy> {
                         enabled: false,
                         decoration: InputDecoration(
                           hintText:  LocaleKeys.searchTitle.tr(),
-                          hintStyle: TextStyle(fontSize: _width * 0.04,fontFamily: 'Cairo'),
+                          hintStyle: TextStyle(fontSize: _width * 0.035,fontFamily: 'Cairo'),
                           disabledBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(4),
                               borderSide: BorderSide(color: Colors.white)),

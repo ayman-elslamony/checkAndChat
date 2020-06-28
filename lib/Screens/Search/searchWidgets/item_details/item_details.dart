@@ -40,6 +40,9 @@ class ItemDetails extends StatefulWidget {
 
 class _ItemDetailsState extends State<ItemDetails> {
   bool _isloadingPhoto = false;
+  static bool _isFunny= false;
+  static bool _isUsefull = false;
+  static bool _isCool = false;
   Future<int> _getReview;
   ScrollController _scrollController;
   bool _showTitle = false;
@@ -200,7 +203,7 @@ class _ItemDetailsState extends State<ItemDetails> {
   Widget _listTile(
       {String title, String subtitle = '', IconData icon, Function function}) {
     return ListTile(
-      title: Text(title),
+      title: Text(title,style: TextStyle(fontFamily: 'Cairo'),),
       trailing: Icon(
         icon,
         color: Color(0xffc62828),
@@ -209,7 +212,7 @@ class _ItemDetailsState extends State<ItemDetails> {
           ? null
           : Text(
               subtitle,
-              style: TextStyle(fontSize: 14, color: Colors.grey),
+              style: TextStyle(fontSize: 14, color: Colors.grey,fontFamily: 'Cairo'),
             ),
       onTap: function,
     );
@@ -445,22 +448,22 @@ class _ItemDetailsState extends State<ItemDetails> {
                                     collectionName: snapshot.data[index]
                                         ['nameOfCollection']);
                             if (x == 'true') {
-                              Toast.show("Successfully added", context,
+                              Toast.show(LocaleKeys.success.tr(), context,
                                   duration: Toast.LENGTH_LONG,
                                   gravity: Toast.BOTTOM);
                               Navigator.of(context).pop();
                             } else if (x == 'false') {
                               Toast.show(
-                                  "failed to added please try again", context,
+                                  LocaleKeys.failed.tr(), context,
                                   duration: Toast.LENGTH_SHORT,
                                   gravity: Toast.BOTTOM);
                             } else if (x == 'already exits') {
-                              Toast.show("Already Added", context,
+                              Toast.show(LocaleKeys.alreadyExist.tr(), context,
                                   duration: Toast.LENGTH_SHORT,
                                   gravity: Toast.BOTTOM);
                               Navigator.of(context).pop();
                             } else {
-                              Toast.show("please try again", context,
+                              Toast.show(LocaleKeys.tryAgain.tr(), context,
                                   duration: Toast.LENGTH_SHORT,
                                   gravity: Toast.BOTTOM);
                             }
@@ -499,9 +502,9 @@ class _ItemDetailsState extends State<ItemDetails> {
                                       listen: false)
                                   .removeCollection(
                                       collectionName: snapshot.data[index]
-                                          ['nameOfCollection']);
+                                          ['nameOfCollection'],isPublic:snapshot.data[index]['isPublic'] );
                               if (x == true) {
-                                Toast.show("Successfully removed", context,
+                                Toast.show(LocaleKeys.remove.tr(), context,
                                     duration: Toast.LENGTH_LONG,
                                     gravity: Toast.BOTTOM);
                                 Navigator.of(context).pop();
@@ -570,7 +573,7 @@ class _ItemDetailsState extends State<ItemDetails> {
         // padding: EdgeInsets.symmetric(horizontal: 12,vertical: 6),
         decoration: BoxDecoration(
           color: Colors.grey[200],
-          borderRadius: BorderRadius.circular(20),
+          borderRadius: BorderRadius.circular(10),
         ),
         child: InkWell(
           onTap: () {
@@ -585,171 +588,174 @@ class _ItemDetailsState extends State<ItemDetails> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              ListTile(
-                contentPadding: EdgeInsets.only(left: 4.0, bottom: 1.0),
-                leading: CircleAvatar(
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 4),
+                child: ListTile(
+                  contentPadding: EdgeInsets.only(left: 4.0, bottom: 1.0),
+                  leading: CircleAvatar(
 
-                    radius: 25.0,
-                    child: ClipOval(
-                        child: review.userImgUrl == null
-                            ? Image.asset(
-                                'images/user.png',
-                                height: 70,
-                                width: 70,
-                                fit: BoxFit.cover,
-                              )
-                            : FadeInImage.assetNetwork(
-                                placeholder: 'images/meScreenIcons/userPlaceholder.png',
-                                image: review.userImgUrl,
-                                    //                fit: BoxFit.fill,
-                                height: 70,
-                                width: 70,
-                                fit: BoxFit.cover,
-                                fadeInCurve: Curves.bounceIn,
-                              ))),
-                title: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Text(
-                      review.userName == null ? '' : review.userName,
-                      style: TextStyle(color: Colors.black, fontSize: _width*0.035,fontWeight: FontWeight.w600),
-                    ),
-                    Container(
-                      child: Row(
-                        children: <Widget>[
-                          Text(
-                        DateFormat('dd/MM/yyyy hh:mm')
-                            .format(DateTime.parse(review.date)),
-                        style: TextStyle(
-                          fontSize: _width*0.03,
-                          color: Colors.grey,
-                        )
-                        ),
-                    review.userId == userId
-                        ? PopupMenuButton<String>(
-                            shape: RoundedRectangleBorder(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(10))),
-                            icon: Icon(
-                              Icons.more_vert,
-                              color: Colors.grey,
-                              size: 18,
-                            ),
-                            itemBuilder: (context) => ['Edit', 'Delete']
-                                .map((String val) => PopupMenuItem<String>(
-                                      child: Text(val),
-                                      value: val,
-                                    ))
-                                .toList(),
-                            onSelected: (String val) {
-                              if (val == 'Edit') {
-                                Navigator.of(context)
-                                    .push(MaterialPageRoute(
-                                        builder: (context) => StartReview(
-                                              category: loadedProduct,
-                                              review: review,
-                                            )))
-                                    .then((x) {
-                                  x == null || x == false
-                                      ? result = false
-                                      : result = true;
-                                });
-                              }
-                              if (val == 'Delete') {
-                                Provider.of<Categorys>(context, listen: false)
-                                    .deleteAReview(
-                                  resturant: loadedProduct,
-                                  review: review,
+                      radius: 25.0,
+                      child: ClipOval(
+                          child: review.userImgUrl == null
+                              ? Image.asset(
+                                  'images/user.png',
+                                  height: 70,
+                                  width: 70,
+                                  fit: BoxFit.cover,
                                 )
-                                    .then((x) {
-                                  if (x == 'true') {
-                                    Toast.show("successfully deleted!", context,
-                                        duration: Toast.LENGTH_SHORT,
-                                        gravity: Toast.BOTTOM);
-                                    _onRefresh();
-                                  } else if (x == 'false') {
-                                    Toast.show("failed to delete!", context,
-                                        duration: Toast.LENGTH_SHORT,
-                                        gravity: Toast.BOTTOM);
-                                  }
-                                });
-                              }
-                            }
-                            )
-                        : SizedBox(),
-                        ],
-                      )
-                    )
-                                //            SizedBox(
-                                //              width: 6,
-                                //            ),
-                                //            Container(
-                                //              color: Colors.red,
-                                //              padding: EdgeInsets.all(3.0),
-                                //              child: Text(
-                                //                'Elite \'29',
-                                //                style: TextStyle(
-                                //                    fontSize: 12,
-                                //                    color: Colors.white),
-                                //              ),
-                                //            )
-                  ],
-                ),
-                subtitle: Padding(
-                    padding: const EdgeInsets.only(top: 5.0),
-                    child: Column(
-                      children: <Widget>[
-                        Row(
+                              : FadeInImage.assetNetwork(
+                                  placeholder: 'images/meScreenIcons/userPlaceholder.png',
+                                  image: review.userImgUrl,
+                                      //                fit: BoxFit.fill,
+                                  height: 70,
+                                  width: 70,
+                                  fit: BoxFit.cover,
+                                  fadeInCurve: Curves.bounceIn,
+                                ))),
+                  title: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Text(
+                        review.userName == null ? '' : review.userName,
+                        style: TextStyle(color: Colors.black, fontSize: _width*0.035,fontWeight: FontWeight.w600),
+                      ),
+                      Container(
+                        child: Row(
                           children: <Widget>[
-                            _iconWithTitle(
-                                icon: ImageIcon(
-                                    AssetImage('images/meScreenIcons/friends.png'),
-                                    size: 18),
-                                title: review.friendsCount),
-                            _iconWithTitle(
-                                icon: ImageIcon(
-                                    AssetImage(
-                                        'images/meScreenIcons/addReview.png'),
-                                    color: Colors.grey[700],
-                                    size: 18),
-                                title: review.userRating),
-                            _iconWithTitle(
-                                icon: ImageIcon(
-                                  AssetImage('images/meScreenIcons/photo.png'),
-                                  color: Colors.grey[700],
-                                  size: 18,
-                                ),
-                                title: review.userPhoto),
-                          ],
-                        ),
-                        SizedBox(height: 8),
-                        Row(
-                          // mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            review.rating == 0.0
-                                ? SizedBox(
-                                    width: MediaQuery.of(context).size.width * 0.25,
+                            Text(
+                          DateFormat('dd/MM/yyyy hh:mm')
+                              .format(DateTime.parse(review.date)),
+                          style: TextStyle(
+                            fontSize: _width*0.03,
+                            color: Colors.grey,
+                          )
+                          ),
+                      review.userId == userId
+                          ? PopupMenuButton<String>(
+                              shape: RoundedRectangleBorder(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(10))),
+                              icon: Icon(
+                                Icons.more_vert,
+                                color: Colors.grey,
+                                size: 18,
+                              ),
+                          itemBuilder: (context) => [LocaleKeys.edit.tr(), LocaleKeys.delete]
+                                  .map((String val) => PopupMenuItem<String>(
+                                        child: Text(val),
+                                        value: val,
+                                      ))
+                                  .toList(),
+                              onSelected: (String val) {
+                                if (val == 'Edit' || val =='تعديل') {
+                                  Navigator.of(context)
+                                      .push(MaterialPageRoute(
+                                          builder: (context) => StartReview(
+                                                category: loadedProduct,
+                                                review: review,
+                                              )))
+                                      .then((x) {
+                                    x == null || x == false
+                                        ? result = false
+                                        : result = true;
+                                  });
+                                }
+                                if (val == 'Delete' || val == 'حذف') {
+                                  Provider.of<Categorys>(context, listen: false)
+                                      .deleteAReview(
+                                    resturant: loadedProduct,
+                                    review: review,
                                   )
-                                : RatingBar(
-                                    initialRating: review.rating,
-                                    direction: Axis.horizontal,
-                                    allowHalfRating: true,
-                                    itemCount: 5,
-                                    itemPadding:
-                                        EdgeInsets.symmetric(horizontal: 1.0),
-                                    itemBuilder: (context, _) => Icon(
-                                      Icons.stars,
-                                      color: Color(0xffc62828),
-                                    ),
-                                    unratedColor: Colors.grey,
-                                    itemSize: 20,
-                                    ignoreGestures: true,
-                                    onRatingUpdate: (double value) {},
-                                  ),
+                                      .then((x) {
+                                    if (x == 'true') {
+                                      Toast.show(LocaleKeys.success.tr(), context,
+                                          duration: Toast.LENGTH_SHORT,
+                                          gravity: Toast.BOTTOM);
+                                      _onRefresh();
+                                    } else if (x == 'false') {
+                                      Toast.show(LocaleKeys.remove.tr(), context,
+                                          duration: Toast.LENGTH_SHORT,
+                                          gravity: Toast.BOTTOM);
+                                    }
+                                  });
+                                }
+                              }
+                              )
+                          : SizedBox(),
                           ],
-                        ),
-                      ],
-                    )),
+                        )
+                      )
+                                  //            SizedBox(
+                                  //              width: 6,
+                                  //            ),
+                                  //            Container(
+                                  //              color: Colors.red,
+                                  //              padding: EdgeInsets.all(3.0),
+                                  //              child: Text(
+                                  //                'Elite \'29',
+                                  //                style: TextStyle(
+                                  //                    fontSize: 12,
+                                  //                    color: Colors.white),
+                                  //              ),
+                                  //            )
+                    ],
+                  ),
+                  subtitle: Padding(
+                      padding: const EdgeInsets.only(top: 5.0),
+                      child: Column(
+                        children: <Widget>[
+                          Row(
+                            children: <Widget>[
+                              _iconWithTitle(
+                                  icon: ImageIcon(
+                                      AssetImage('images/meScreenIcons/friends.png'),
+                                      size: 18),
+                                  title: review.friendsCount),
+                              _iconWithTitle(
+                                  icon: ImageIcon(
+                                      AssetImage(
+                                          'images/meScreenIcons/addReview.png'),
+                                      color: Colors.grey[700],
+                                      size: 18),
+                                  title: review.userRating),
+                              _iconWithTitle(
+                                  icon: ImageIcon(
+                                    AssetImage('images/meScreenIcons/photo.png'),
+                                    color: Colors.grey[700],
+                                    size: 18,
+                                  ),
+                                  title: review.userPhoto),
+                            ],
+                          ),
+                          SizedBox(height: 8),
+                          Row(
+                            // mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              review.rating == 0.0
+                                  ? SizedBox(
+                                      width: MediaQuery.of(context).size.width * 0.25,
+                                    )
+                                  : RatingBar(
+                                      initialRating: review.rating,
+                                      direction: Axis.horizontal,
+                                      allowHalfRating: true,
+                                      itemCount: 5,
+                                      itemPadding:
+                                          EdgeInsets.symmetric(horizontal: 1.0),
+                                      itemBuilder: (context, _) => Icon(
+                                        Icons.stars,
+                                        color: Color(0xffc62828),
+                                      ),
+                                      unratedColor: Colors.grey,
+                                      itemSize: 20,
+                                      ignoreGestures: true,
+                                      onRatingUpdate: (double value) {},
+                                    ),
+                            ],
+                          ),
+                        ],
+                      )),
+                ),
               ),
               // Row(
               //   // mainAxisAlignment: MainAxisAlignment.center,
@@ -839,14 +845,15 @@ class _ItemDetailsState extends State<ItemDetails> {
                             size: 19),
                         title: 'Useful',
                         number: review.useful,
-                        function: () {
-                          Provider.of<Categorys>(context, listen: false)
+                        function: _isUsefull?null:() {
+                           Provider.of<Categorys>(context, listen: false)
                               .updateTransactionsForCategory(
                                   review: review,
                                   type: 'useful',
+                                  chage: _isUsefull,
                                   category: loadedProduct);
                         },
-                        isColorChange: review.isUseful),
+                        isColorChange:  review.useful !=0?true:false),
                     _iconWithTitleAndNumbers(
                         icon: ImageIcon(
                             AssetImage('images/meScreenIcons/happy.png'),
@@ -854,28 +861,31 @@ class _ItemDetailsState extends State<ItemDetails> {
                             size: 20),
                         title: 'Funny',
                         number: review.funny,
-                        function: () {
+                        function: _isFunny?null:() {
                           Provider.of<Categorys>(context, listen: false)
                               .updateTransactionsForCategory(
                                   review: review,
                                   type: 'funny',
+                                  chage: _isFunny,
                                   category: loadedProduct);
                         },
-                        isColorChange: review.isFunny),
+                        isColorChange: review.funny !=0?true:false),
                     _iconWithTitleAndNumbers(
                         icon: ImageIcon(AssetImage('images/meScreenIcons/cool.png'),
                             color: review.isColl ? Colors.red : Colors.black54,
                             size: 20),
                         title: 'Cool',
                         number: review.cool,
-                        function: () {
+                        function: _isCool?null:() {
                           Provider.of<Categorys>(context, listen: false)
                               .updateTransactionsForCategory(
                                   review: review,
                                   type: 'cool',
+                                  chage: _isCool,
                                   category: loadedProduct);
+
                         },
-                        isColorChange: review.isColl),
+                        isColorChange: review.cool !=0?true:false),
                   ],
                 ),
               ),
@@ -935,9 +945,9 @@ class _ItemDetailsState extends State<ItemDetails> {
                         try{
                           await Provider.of<Categorys>(context, listen: false)
                               .addPhoto(type: 'owner',resturant: loadedProduct, imageFile: imageFile);
-                          Toast.show( "Successfully added",context, duration: Toast.LENGTH_LONG, gravity:  Toast.BOTTOM);
+                          Toast.show( LocaleKeys.success.tr(),context, duration: Toast.LENGTH_LONG, gravity:  Toast.BOTTOM);
                         }catch(e){
-                          Toast.show( "Failed Please try again",context, duration: Toast.LENGTH_LONG, gravity:  Toast.BOTTOM);
+                          Toast.show( LocaleKeys.failed.tr(),context, duration: Toast.LENGTH_LONG, gravity:  Toast.BOTTOM);
                         }
                         setState(() {
                           _isloadingPhoto = false;
@@ -959,9 +969,9 @@ class _ItemDetailsState extends State<ItemDetails> {
                         try{
                           await Provider.of<Categorys>(context, listen: false)
                               .addPhoto(resturant: loadedProduct, imageFile: imageFile);
-                          Toast.show( "Successfully added",context, duration: Toast.LENGTH_LONG, gravity:  Toast.BOTTOM);
+                          Toast.show( LocaleKeys.success.tr(),context, duration: Toast.LENGTH_LONG, gravity:  Toast.BOTTOM);
                         }catch(e){
-                          Toast.show( "Failed Please try again",context, duration: Toast.LENGTH_LONG, gravity:  Toast.BOTTOM);
+                          Toast.show( LocaleKeys.failed.tr(),context, duration: Toast.LENGTH_LONG, gravity:  Toast.BOTTOM);
                         }
                         Navigator.of(context).pop();
                         setState(() {
@@ -992,9 +1002,9 @@ class _ItemDetailsState extends State<ItemDetails> {
           try{
             await Provider.of<Categorys>(context, listen: false)
                 .addPhoto(resturant: loadedProduct, imageFile: imageFile);
-            Toast.show( "Successfully added",context, duration: Toast.LENGTH_LONG, gravity:  Toast.BOTTOM);
+            Toast.show( LocaleKeys.success.tr(),context, duration: Toast.LENGTH_LONG, gravity:  Toast.BOTTOM);
           }catch(e){
-            Toast.show( "Failed Please try again",context, duration: Toast.LENGTH_LONG, gravity:  Toast.BOTTOM);
+            Toast.show( LocaleKeys.failed.tr(),context, duration: Toast.LENGTH_LONG, gravity:  Toast.BOTTOM);
           }
           setState(() {
             _isloadingPhoto = false;
@@ -1012,16 +1022,16 @@ class _ItemDetailsState extends State<ItemDetails> {
           context: context,
           builder: (BuildContext context) {
             return Container(
-              height: 100.0,
+              height: 120.0,
               padding: EdgeInsets.all(10.0),
               child: Column(children: [
                 Text(
-                  'Pick an Image',
+                  LocaleKeys.pickImage,
                   style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 18,
                       color: Colors.red),
-                ),
+                ).tr(context: context),
                 SizedBox(
                   height: 5.0,
                 ),
@@ -1038,9 +1048,9 @@ class _ItemDetailsState extends State<ItemDetails> {
                       color: Colors.blue,
                       textColor: Theme.of(context).primaryColor,
                       label: Text(
-                        'Use Camera',
-                        style: TextStyle(color: Colors.white),
-                      ),
+                        LocaleKeys.camera,
+                        style: TextStyle(color: Colors.white,fontFamily: 'Cairo'),
+                      ).tr(context: context),
                       onPressed: () {
                         _getImage(ImageSource.camera);
                         // Navigator.of(context).pop();
@@ -1056,17 +1066,16 @@ class _ItemDetailsState extends State<ItemDetails> {
                       color: Colors.blue,
                       textColor: Theme.of(context).primaryColor,
                       label: Text(
-                        'Use Gallery',
-                        style: TextStyle(color: Colors.white),
-                      ),
+                        LocaleKeys.gallery,
+                        style: TextStyle(color: Colors.white,fontFamily: 'Cairo'),
+                      ).tr(context: context),
                       onPressed: () {
                         _getImage(ImageSource.gallery);
                         // Navigator.of(context).pop();
                       },
                     ),
                   ],
-                ),
-                
+                )
               ]),
             );
           });
@@ -1116,29 +1125,29 @@ class _ItemDetailsState extends State<ItemDetails> {
                         color: Colors.white,
                       ),
                       itemBuilder: (context) =>
-                          ['Call', 'Add To Collection', 'Add photo', 'Check In']
+                          [LocaleKeys.call.tr(), LocaleKeys.addToCollection.tr(), LocaleKeys.addPhoto.tr(), LocaleKeys.checkIn]
                               .map((String val) => PopupMenuItem<String>(
                                     child: Text(val),
                                     value: val,
                                   ))
                               .toList(),
                       onSelected: (String val) {
-                        if (val == 'Call') {
+                        if (val == 'Call' ) {
                           if (loadedProduct.phone.isNotEmpty) {
                             launch("tel:${loadedProduct.phone}");
                           } else {
-                            Toast.show("Sorry mobile not avilable", context,
+                            Toast.show(LocaleKeys.mobileNotAvailable.tr(), context,
                                 duration: Toast.LENGTH_SHORT,
                                 gravity: Toast.BOTTOM);
                           }
                         }
-                        if (val == 'Add To Collection') {
+                        if (val == 'Add To Collection' || val == 'إضافة للألبومات') {
                           _addToCollection();
                         }
-                        if (val == 'Add photo') {
+                        if (val == 'Add photo' || val == 'إضافة صورة') {
                           _openImagePicker();
                         }
-                        if (val == 'Check In') {
+                        if (val == 'Check In' || val == 'توثيق') {
                           Navigator.of(context).push(MaterialPageRoute(
                               builder: (context) => CheckIn(
                                     resturant: loadedProduct,
@@ -1225,8 +1234,8 @@ class _ItemDetailsState extends State<ItemDetails> {
                                     },
                                     color: Colors.white,
                                     child: Text(
-                                      'See All',
-                                      style: TextStyle(fontSize: 14),
+                                      LocaleKeys.all.tr(),
+                                      style: TextStyle(fontSize: 14,fontFamily: 'Cairo'),
                                     ),
                                   )
                                 ],
@@ -1249,7 +1258,7 @@ class _ItemDetailsState extends State<ItemDetails> {
                             if (loadedProduct.phone.isNotEmpty) {
                               launch("tel:${loadedProduct.phone}");
                             } else {
-                              Toast.show("Sorry mobile not avilable", context,
+                              Toast.show(LocaleKeys.mobileNotAvailable.tr(), context,
                                   duration: Toast.LENGTH_SHORT,
                                   gravity: Toast.BOTTOM);
                             }
@@ -1274,7 +1283,7 @@ class _ItemDetailsState extends State<ItemDetails> {
                                           //                                          fontSize: 19, color: Colors.black),
                                           //                                    ),
                                       Text(
-                                        'Tap here to call',
+                                        LocaleKeys.call.tr(),
                                         style:
                                             _textStyle.copyWith(fontSize: 16),
                                       ),
@@ -1336,7 +1345,7 @@ class _ItemDetailsState extends State<ItemDetails> {
                                         MainAxisAlignment.spaceBetween,
                                     children: <Widget>[
                                       Text(
-                                        'Start a review...',
+                                        LocaleKeys.startReview.tr(),
                                         style: _textStyle.copyWith(
                                             color: Colors.black),
                                       ),
@@ -1376,14 +1385,14 @@ class _ItemDetailsState extends State<ItemDetails> {
                                                   AssetImage(
                                                       'images/meScreenIcons/addPhoto.png'),
                                                   color: Colors.grey[600]),
-                                              title: 'Add photo',
+                                              title: LocaleKeys.addPhoto.tr(),
                                               function: () {
                                                 _openImagePicker();
                                               }),
                                       _createIconWithText(
                                           icon: ImageIcon(AssetImage(
                                               'images/meScreenIcons/checkin.png')),
-                                          title: 'Check In',
+                                          title: LocaleKeys.checkIn.tr(),
                                           function: () {
                                             Navigator.of(context).push(
                                                 MaterialPageRoute(
@@ -1399,7 +1408,7 @@ class _ItemDetailsState extends State<ItemDetails> {
                                                 'images/NavBar/bookmark-filled.png'),
                                             color: Colors.grey[600],
                                           ),
-                                          title: 'Save',
+                                          title: LocaleKeys.save.tr(),
                                           function: _addToCollection),
                                     ],
                                   ),
@@ -1551,7 +1560,7 @@ class _ItemDetailsState extends State<ItemDetails> {
                                   padding: const EdgeInsets.symmetric(
                                       vertical: 8.0, horizontal: 8.0),
                                   child: Text(
-                                    'Business Info',
+                                    LocaleKeys.basicInformation.tr(),
                                     style: _textStyle.copyWith(
                                         color: Colors.black, fontSize: 20),
                                   ),
@@ -1567,7 +1576,7 @@ class _ItemDetailsState extends State<ItemDetails> {
                                 type == ''
                                     ? SizedBox()
                                     : _listTile(
-                                        title: 'Type of Service',
+                                        title: LocaleKeys.serviceType.tr(),
                                         subtitle: type,
                                         icon: Icons.room_service,
                                         function: () {},
@@ -1575,7 +1584,7 @@ class _ItemDetailsState extends State<ItemDetails> {
                                 _priceLevel == ''
                                     ? SizedBox()
                                     : _listTile(
-                                        title: 'Price level',
+                                        title: LocaleKeys.priceLevel.tr(),
                                         subtitle: _priceLevel,
                                         icon: Icons.monetization_on,
                                         function: () {},
@@ -1583,21 +1592,21 @@ class _ItemDetailsState extends State<ItemDetails> {
                                 _listTile(
                                   subtitle: loadedProduct.phone,
                                   title:
-                                      'Call ${loadedProduct.phone.isNotEmpty ? loadedProduct.phone : ''}',
+                                      '${LocaleKeys.call.tr()} ${loadedProduct.phone.isNotEmpty ? loadedProduct.phone : ''}',
                                   icon: Icons.call,
                                   function: () {
                                     if (loadedProduct.phone.isNotEmpty) {
                                       launch("tel:${loadedProduct.phone}");
                                     } else {
                                       Toast.show(
-                                          "Sorry mobile not avilable", context,
+                                          LocaleKeys.mobileNotAvailable.tr(), context,
                                           duration: Toast.LENGTH_SHORT,
                                           gravity: Toast.BOTTOM);
                                     }
                                   },
                                 ),
                                 _listTile(
-                                    title: 'Location',
+                                    title: LocaleKeys.location.tr(),
                                     subtitle: loadedProduct.vicinity,
                                     icon: Icons.location_on,
                                     function: () {
@@ -1608,7 +1617,7 @@ class _ItemDetailsState extends State<ItemDetails> {
                                 loadedProduct.distance == 0.0
                                     ? SizedBox()
                                     : _listTile(
-                                        title: 'Distance Between you',
+                                        title: LocaleKeys.distanceFromYou.tr(),
                                         subtitle:
                                             '${loadedProduct.distance.toStringAsFixed(4)} km',
                                         icon: Icons.directions),

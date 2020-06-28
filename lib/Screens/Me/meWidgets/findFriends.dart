@@ -245,8 +245,8 @@ class _FindFriendsState extends State<FindFriends> {
                 child: TextFormField(
                   autofocus: false,
                   decoration: InputDecoration(
-                    hintText: 'Search For Friends',
-                    hintStyle: TextStyle(fontSize: _width * 0.04),
+                    hintText: LocaleKeys.search.tr(),
+                    hintStyle: TextStyle(fontSize: _width * 0.035,fontFamily: 'Cairo'),
                     disabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(4),
                         borderSide: BorderSide(color: Colors.grey[400])),

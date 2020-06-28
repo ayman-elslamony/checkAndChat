@@ -15,12 +15,16 @@ class ShowPhotos extends StatefulWidget {
   List<UserPhotoForSpecificCategory> photosForSpecificCategory;
   Category category;
   Function addPhotos;
-String userId;
+  Function deletePhoto;
+  String userId;
+
   ShowPhotos(
       {this.category,
       this.photosType,
       this.photosForSpecificCategory,
-      this.addPhotos,this.userId});
+      this.deletePhoto,
+      this.addPhotos,
+      this.userId});
 
   @override
   _ShowPhotosState createState() => _ShowPhotosState();
@@ -36,7 +40,8 @@ class _ShowPhotosState extends State<ShowPhotos> {
         onTap: () {
           Navigator.of(context).push(MaterialPageRoute(
               builder: (context) => ShowImage(
-                    imgUrl: widget.photosForSpecificCategory[index].categoryImage,
+                    imgUrl:
+                        widget.photosForSpecificCategory[index].categoryImage,
                   )));
         },
         child: Stack(
@@ -47,14 +52,15 @@ class _ShowPhotosState extends State<ShowPhotos> {
               fit: BoxFit.fill,
             ),
             widget.photosForSpecificCategory[index].userName == null ||
-                    widget.photosForSpecificCategory[index].userName == 'null'||
+                    widget.photosForSpecificCategory[index].userName ==
+                        'null' ||
                     widget.photosForSpecificCategory[index].userName == ''
                 ? SizedBox()
                 : Positioned(
                     child: Container(
                       color: Colors.black12,
                       child: Padding(
-                        padding: const EdgeInsets.only(left:12.0),
+                        padding: const EdgeInsets.only(left: 12.0),
                         child: Row(
                           children: <Widget>[
                             Text(
@@ -67,7 +73,8 @@ class _ShowPhotosState extends State<ShowPhotos> {
                                   fontWeight: FontWeight.bold),
                             ),
                             Spacer(),
-                            widget.photosForSpecificCategory[index].userId == widget.userId
+                            widget.photosForSpecificCategory[index].userId ==
+                                    widget.userId
                                 ? PopupMenuButton<String>(
                                     shape: RoundedRectangleBorder(
                                         borderRadius: BorderRadius.all(
@@ -77,34 +84,17 @@ class _ShowPhotosState extends State<ShowPhotos> {
                                       color: Colors.white,
                                     ),
                                     itemBuilder: (context) => ['Delete']
-                                        .map(
-                                            (String val) => PopupMenuItem<String>(
-                                                  child: Text(val),
-                                                  value: val,
-                                                ))
+                                        .map((String val) =>
+                                            PopupMenuItem<String>(
+                                              child: Text(val),
+                                              value: val,
+                                            ))
                                         .toList(),
                                     onSelected: (String val) {
-                                      if (val == 'Delete') {
-                                        Provider.of<Categorys>(context,
-                                                listen: false)
-                                            .deletePhoto(
-                                          resturant: widget.category,
-photosForSpecificCategory: widget.photosForSpecificCategory[index]
-                                        )
-                                            .then((x) {
-                                          if (x == 'true') {
-                                            Toast.show(
-                                                "successfully deleted!", context,
-                                                duration: Toast.LENGTH_SHORT,
-                                                gravity: Toast.BOTTOM);
-                                          } else if (x == 'false') {
-                                            Toast.show(
-                                                "failed to delete!", context,
-                                                duration: Toast.LENGTH_SHORT,
-                                                gravity: Toast.BOTTOM);
-                                          }
-                                        });
-                                      }
+                                      widget.deletePhoto(
+                                          val,
+                                          widget.photosForSpecificCategory[
+                                              index]);
                                     })
                                 : SizedBox(),
                           ],
@@ -131,10 +121,9 @@ photosForSpecificCategory: widget.photosForSpecificCategory[index]
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 ImageIcon(
-                AssetImage(
-                    'images/meScreenIcons/addPhoto.png'),
-                color: Colors.grey[600],
-                size: 35,
+                  AssetImage('images/meScreenIcons/addPhoto.png'),
+                  color: Colors.grey[600],
+                  size: 35,
                 ),
                 Text(
                   'Add',

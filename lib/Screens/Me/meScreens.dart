@@ -74,7 +74,7 @@ class _MeScreensState extends State<MeScreens> {
             ).tr(context: context),
             actions: <Widget>[
               FlatButton(
-                child: Text('Ok'),
+                child: Text(LocaleKeys.cancel.tr(),style: TextStyle(fontFamily: 'Cairo'),),
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
@@ -96,10 +96,10 @@ class _MeScreensState extends State<MeScreens> {
           await Provider.of<UserData>(context, listen: false)
               .changePicture(imgUrl: fileURL);
         });
-        Toast.show("Successfully Changed!", context,
+        Toast.show(LocaleKeys.success.tr(), context,
             duration: Toast.LENGTH_SHORT, gravity: Toast.BOTTOM);
       } catch (e) {
-        Toast.show("Please try again!", context,
+        Toast.show(LocaleKeys.failed.tr(), context,
             duration: Toast.LENGTH_SHORT, gravity: Toast.BOTTOM);
       }
     }
@@ -126,12 +126,12 @@ class _MeScreensState extends State<MeScreens> {
               padding: EdgeInsets.all(10.0),
               child: Column(children: [
                 Text(
-                  'Pick an Image',
+                  LocaleKeys.pickImage,
                   style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 18,
                       color: Colors.red),
-                ),
+                ).tr(context: context),
                 SizedBox(
                   height: 5.0,
                 ),
@@ -148,10 +148,9 @@ class _MeScreensState extends State<MeScreens> {
                       color: Colors.blue,
                       textColor: Theme.of(context).primaryColor,
                       label: Text(
-                        'Use Camera',
-                        style:
-                            TextStyle(color: Colors.white, fontFamily: 'Cairo'),
-                      ),
+                        LocaleKeys.camera,
+                        style: TextStyle(color: Colors.white,fontFamily: 'Cairo'),
+                      ).tr(context: context),
                       onPressed: () {
                         _getImage(ImageSource.camera);
                         // Navigator.of(context).pop();
@@ -167,10 +166,9 @@ class _MeScreensState extends State<MeScreens> {
                       color: Colors.blue,
                       textColor: Theme.of(context).primaryColor,
                       label: Text(
-                        'Use Gallery',
-                        style:
-                            TextStyle(color: Colors.white, fontFamily: 'Cairo'),
-                      ),
+                        LocaleKeys.gallery,
+                        style: TextStyle(color: Colors.white,fontFamily: 'Cairo'),
+                      ).tr(context: context),
                       onPressed: () {
                         _getImage(ImageSource.gallery);
                         // Navigator.of(context).pop();
@@ -412,7 +410,8 @@ class _MeScreensState extends State<MeScreens> {
                                               keyboardType: TextInputType.text,
                                               cursorColor: Colors.red,
                                               decoration: InputDecoration(
-                                                labelText: 'Change Name',
+                                                labelStyle: TextStyle(fontFamily: 'Cairo'),
+                                                labelText: LocaleKeys.changeName.tr(),
                                                 focusedErrorBorder:
                                                     OutlineInputBorder(
                                                         borderSide: BorderSide(
@@ -488,7 +487,7 @@ class _MeScreensState extends State<MeScreens> {
                                           ),
                                           actions: <Widget>[
                                             FlatButton(
-                                              child: Text('Ok',
+                                              child: Text(LocaleKeys.ok.tr(),
                                                   style: TextStyle(
                                                       color: Colors.red,
                                                       fontWeight:
@@ -517,7 +516,7 @@ class _MeScreensState extends State<MeScreens> {
                                                                   .text);
                                                   if (x == true) {
                                                     Toast.show(
-                                                        "Successfully Changed",
+                                                        LocaleKeys.success.tr(),
                                                         context,
                                                         duration:
                                                             Toast.LENGTH_LONG,
@@ -525,7 +524,7 @@ class _MeScreensState extends State<MeScreens> {
                                                     Navigator.of(context).pop();
                                                   } else {
                                                     Toast.show(
-                                                        "please try again",
+                                                        LocaleKeys.tryAgain.tr(),
                                                         context,
                                                         duration:
                                                             Toast.LENGTH_SHORT,
@@ -535,7 +534,7 @@ class _MeScreensState extends State<MeScreens> {
                                               },
                                             ),
                                             FlatButton(
-                                              child: Text('Cancel',
+                                              child: Text(LocaleKeys.cancel.tr(),
                                                   style: TextStyle(
                                                       color: Colors.black54,
                                                       fontWeight:

@@ -2,6 +2,7 @@ import 'package:checkandchat/Providers/Auth.dart';
 import 'package:checkandchat/Providers/user_data.dart';
 import 'package:checkandchat/Screens/Me/meWidgets/moreWidgets.dart/Friend_collections.dart';
 import 'package:checkandchat/chat/user_chat_screen.dart';
+import 'package:checkandchat/chats/chat.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../../Screens/Me/meWidgets/moreWidgets.dart/freiend-activities.dart';
@@ -237,6 +238,7 @@ class _FriendPageState extends State<FriendPage> {
         context,
         listen: false)
         .unFriend(
+      friendDeta: _userData,
         friendID:
         widget.friendId);
     }
@@ -247,6 +249,7 @@ class _FriendPageState extends State<FriendPage> {
       context,
       listen: false)
       .acceptFriend(
+      friendDeta: _userData,
       friendID:
       widget.friendId);
   }
@@ -355,16 +358,21 @@ class _FriendPageState extends State<FriendPage> {
                                     children: <Widget>[
                                       Padding(
                                         padding: const EdgeInsets.all(8.0),
-                                        child: RaisedButton(onPressed: (){
-                                          _confirmFriend();
-                                          Navigator.of(context).pop();
-                                          if(isLoadingData){
-                                            setState(() {
-                                            
-                                          _refreshToGetUserData();
+                                        child: RaisedButton(onPressed: ()async{
+                                          setState(() {
+                                            loading=true;
                                           });
-                                          }
-
+                                          await _confirmFriend();
+                                          setState(() {
+                                            loading=false;
+                                          });
+                                         Navigator.of(context).pop();
+//                                         isLoadingData = true;
+//                                          if(isLoadingData){
+//                                            setState(() {
+//                                          _refreshToGetUserData();
+//                                          });
+//                                          }
                                         },
                                           color: Colors.green[700],
                                           shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(5))),
@@ -378,8 +386,11 @@ class _FriendPageState extends State<FriendPage> {
                                           setState(() {
                                             loading=true;
                                           });
-                                          _unfriend();
+                                         await _unfriend();
                                           Navigator.of(context).pop();
+                                          setState(() {
+                                            loading=false;
+                                          });
                                         },
                                           color: Color(0xffc62828),
                                           shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(5))),
@@ -451,8 +462,8 @@ class _FriendPageState extends State<FriendPage> {
                                             color: Colors.red,
                                             fontWeight:
                                             FontWeight.bold)),
-                                    onPressed: () {
-                                      _unfriend();
+                                    onPressed: () async{
+                                    await  _unfriend();
                                       Navigator.of(context).pop();
                                       if(isLoadingData){
                                             setState(() {
@@ -526,6 +537,7 @@ class _FriendPageState extends State<FriendPage> {
                               userData.friendUserData.isFriendAdded == 'false'?'Add Friend':'Unfriend',
                               style: TextStyle(
                                   fontSize: 14,
+                                  fontFamily: 'Cairo',
                                   fontWeight: FontWeight.w800,
                                   color: userData.friendUserData.isFriendAdded == 'false'?Colors.grey[600]:Color(0xffc62828)),
                             )
@@ -536,10 +548,11 @@ class _FriendPageState extends State<FriendPage> {
                         Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (_) => ChatScreen
+                    builder: (_) => Chat
                       (
-                      friendName: userData.friendUserData.name,
-                      friendId: widget.friendId,
+                      peerName: userData.friendUserData.name,
+                      peerId: widget.friendId,
+                      peerAvatar: userData.friendUserData.imgUrl,
                     ),
                   ),
                 );
@@ -555,30 +568,31 @@ class _FriendPageState extends State<FriendPage> {
                             'Message',
                             style: TextStyle(
                                 fontSize: 14,
+                                fontFamily: 'Cairo',
                                 fontWeight: FontWeight.w800,
                                 color: Colors.grey[600]),
                           )
                         ],
                       ),
                     ),
-                    InkWell(
-                      child: Column(
-                        children: <Widget>[
-                          ImageIcon(
-                              AssetImage(
-                                  'images/meScreenIcons/deals.png'),
-                              color: Colors.grey[600]),
-                          SizedBox(height: 5),
-                          Text(
-                            'Follow',
-                            style: TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w800,
-                                color: Colors.grey[600]),
-                          )
-                        ],
-                      ),
-                    ),
+//                    InkWell(
+//                      child: Column(
+//                        children: <Widget>[
+//                          ImageIcon(
+//                              AssetImage(
+//                                  'images/meScreenIcons/deals.png'),
+//                              color: Colors.grey[600]),
+//                          SizedBox(height: 5),
+//                          Text(
+//                            'Follow',
+//                            style: TextStyle(
+//                                fontSize: 14,
+//                                fontWeight: FontWeight.w800,
+//                                color: Colors.grey[600]),
+//                          )
+//                        ],
+//                      ),
+//                    ),
                   ],
                 ),
 
@@ -591,9 +605,10 @@ class _FriendPageState extends State<FriendPage> {
                             'images/NavBar/bookmark.png'),
                         color: Colors.grey[600]),
                     icon2: Icons.arrow_forward_ios,
-                    text: Text('Collections',
+                    text: Text(LocaleKeys.collections.tr(),
                         style: TextStyle(
                             color: Colors.grey[850],
+                            fontFamily: 'Cairo',
                             fontSize: _width * 0.035,
                             fontWeight: FontWeight.w700))),
                 _divider(),
@@ -604,9 +619,10 @@ class _FriendPageState extends State<FriendPage> {
                             'images/meScreenIcons/friends.png'),
                         color: Colors.grey[600]),
                     icon2: Icons.arrow_forward_ios,
-                    text: Text('Friends',
+                    text: Text(LocaleKeys.friends.tr(),
                         style: TextStyle(
                             color: Colors.grey[850],
+                            fontFamily: 'Cairo',
                             fontSize: _width * 0.035,
                             fontWeight: FontWeight.w700))),
                 _divider(),
@@ -616,9 +632,10 @@ class _FriendPageState extends State<FriendPage> {
                         AssetImage('images/NavBar/activity.png'),
                         color: Colors.grey[600]),
                     icon2: Icons.arrow_forward_ios,
-                    text: Text('Activities',
+                    text: Text(LocaleKeys.activities.tr(),
                         style: TextStyle(
                             color: Colors.grey[850],
+                            fontFamily: 'Cairo',
                             fontSize: _width * 0.035,
                             fontWeight: FontWeight.w700))),
                 _divider(),

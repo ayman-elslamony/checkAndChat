@@ -1,3 +1,4 @@
+import 'package:checkandchat/chats/home.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../Screens/Activities/activitiesScreens.dart';
@@ -24,7 +25,7 @@ class _HomeScreenState extends State<HomeScreen> {
   List<Widget> _widgets = [
     NearBy(),
     Search(),
-    ChatHomeScreen(),
+    HomeChat(),
     ActivitiesScreen(),
     MeScreens(),
   ];

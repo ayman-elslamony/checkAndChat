@@ -11,11 +11,22 @@ class FriendRequests extends StatefulWidget {
 
 class _FriendRequestsState extends State<FriendRequests> {
   bool isLoadingData=true;
-  
-  Future<List<UserData>> _refreshToGetAllCollections() async {
-    
-    return Provider.of<UserData>(context, listen: false).getAllFriendRequest();
+ List<UserData> listOfRequest=[];
+   _refreshToGetAllCollections() async {
+     if(isLoadingData){
+       listOfRequest=await Provider.of<UserData>(context, listen: false).getAllFriendRequest();
+     setState(() {
+       isLoadingData =false;
+     });
+     }
   }
+
+  @override
+  void initState() {
+    super.initState();
+    _refreshToGetAllCollections();
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -32,16 +43,12 @@ class _FriendRequestsState extends State<FriendRequests> {
         .size
         .width;
 
-    Widget _requestButton({String text, Color color,Function function}) {
+    Widget _requestButton({String text, Color color,Function function,int index}) {
       return InkWell(
-          onTap: (){
-            function();
+          onTap: ()async{
+            await function();
             setState(() {
-                  if(isLoadingData){
-                   setState(() {         
-                    _refreshToGetAllCollections();
-                    });
-                   }
+              listOfRequest.removeAt(index);
                   });
           },
           child: Padding(
@@ -62,7 +69,7 @@ class _FriendRequestsState extends State<FriendRequests> {
 
 
     Widget _friendsCard(
-        {Widget image, String name, String address, int friends, int reviews, int photos, Function function,String friendId}) {
+        {int index,Widget image, String name, String address, int friends, int reviews, int photos, Function function,String friendId}) {
       return InkWell(
         onTap: function,
         child: Container(
@@ -98,9 +105,12 @@ class _FriendRequestsState extends State<FriendRequests> {
                       ),
                       Padding(
                         padding: EdgeInsets.only(bottom: _width * 0.01),
-                        child: Text('$address', style: TextStyle(
-                            color: Colors.grey[600],
-                            fontSize: _width * 0.025),),
+                        child: SizedBox(
+                          width: _width*0.3,
+                          child: Text('$address', style: TextStyle(
+                              color: Colors.grey[600],
+                              fontSize: _width * 0.025),),
+                        ),
                       ),
                       Row(
                         children: <Widget>[
@@ -147,14 +157,13 @@ class _FriendRequestsState extends State<FriendRequests> {
                   ),
                 ),
                 Spacer(),
-                _requestButton(text: 'Confirm', color: Colors.green[700],
+                _requestButton(text: 'Confirm', color: Colors.green[700],index: index,
                   function: ()async{
-                  await Provider.of<UserData>(context, listen: false).acceptFriend(friendID: friendId);
+                  await Provider.of<UserData>(context, listen: false).acceptFriend(friendID: friendId,isCommingFromFriendRequest: true);
                   
                 }),
-                _requestButton(text: 'Cancel', color: Color(0xffc62828),function: ()async{
-                  await Provider.of<UserData>(context, listen: false).unFriend(friendID: friendId);
-                  
+                _requestButton(text: 'Cancel', color: Color(0xffc62828),index: index,function: ()async{
+                  await Provider.of<UserData>(context, listen: false).unFriend(friendID: friendId,isCommingFromFriendRequest: true);
                 })
               ],
             ),
@@ -187,73 +196,71 @@ class _FriendRequestsState extends State<FriendRequests> {
         ),
 
 
-        body: FutureBuilder(
-            future: _refreshToGetAllCollections(),
-            builder: (context, dataSnapshot) {
-              if (dataSnapshot.connectionState == ConnectionState.waiting) {
-                return Container(
-                    height: _height,
-                    width: _width,
-                    child: Center(
-                        child: CircularProgressIndicator(
-                          backgroundColor: Color(0xffc62828),
-                        )));
-              } else {
-                if (dataSnapshot.error != null) {
-                  return
-                    Container(
-                      height: _height,
-                      width: _width,
-                      child: Center(
-                      child: Text('An error occurred!'),
+        body: RefreshIndicator(
+          backgroundColor:  Colors.white,
+          color:  Color(0xffc62828),
+          onRefresh: ()async{
+            listOfRequest=await Provider.of<UserData>(context, listen: false).getAllFriendRequest();
+            setState(() {
+
+            });
+            },
+          child: isLoadingData? Container(
+              height: _height,
+              width: _width,
+              child: Center(
+                  child: CircularProgressIndicator(
+                    backgroundColor: Color(0xffc62828),
+                  ))):listOfRequest.length ==0?SizedBox(
+            height: _height,
+            width: _width,
+            child: ListView(
+              shrinkWrap: true,
+              children: <Widget>[
+                SizedBox(
+                  height: _height,
+                  width: _width,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      Text(LocaleKeys.noFriendRequests.tr(),
+                        style: TextStyle(fontSize: 18, color: Colors.grey[700],fontFamily: 'Cairo'),)
+                    ],
                   ),
-                    );
-                } else {
-                  if (dataSnapshot.data.length == 0) {
-                    return SizedBox(
-                      height: _height,
-                      width: _width,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: <Widget>[
-                          Text('There are no friend requests yet',
-                            style: TextStyle(fontSize: 18, color: Colors.grey[700]),)
-                        ],
-                      ),
-                    );
-                  } else {
-                    return SizedBox(
-                      height: _height*0.70,
-                      width: _width,
-                      child: ListView.builder(
-                        itemBuilder: (context, index){
-                            return _friendsCard(
-                              friendId: dataSnapshot.data[index].id,
-                              image: FadeInImage.assetNetwork(
-                                placeholder: 'images/meScreenIcons/userPlaceholder.png',
-                                image: dataSnapshot.data[index].imgUrl,
-                                fit: BoxFit.fill,
-                                height: 120,
-                                width: 120,
-                              ),
-                                friends: dataSnapshot.data[index].friendsCount,
-                                name: dataSnapshot.data[index].name,
-                                function: (){
-                                    Navigator.of(context).push(MaterialPageRoute(builder: (context)=>FriendPage(friendId: dataSnapshot.data[index].id,)));
-                                },
-                              photos: dataSnapshot.data[index].imageCount,
-                              reviews: dataSnapshot.data[index].reviewsCount,
-                              address: dataSnapshot.data[index].address,
-                            );
-                        },
-                        itemCount: dataSnapshot.data.length,
-                      ),
-                    );
-                  }
-                }
-              }
-            })
+                )
+              ],
+            ),
+          ):
+          SizedBox(
+            height: _height*0.70,
+            width: _width,
+            child: ListView.builder(
+              itemBuilder: (context, index){
+                return _friendsCard(
+                  friendId: listOfRequest[index].id,
+                  image: FadeInImage.assetNetwork(
+                    placeholder: 'images/meScreenIcons/userPlaceholder.png',
+                    image: listOfRequest[index].imgUrl,
+                    fit: BoxFit.fill,
+                    height: 120,
+                    width: 120,
+                  ),
+                  friends: listOfRequest[index].friendsCount,
+                  name: listOfRequest[index].name,
+                  function: (){
+                    Navigator.of(context).push(MaterialPageRoute(builder: (context)=>FriendPage(friendId:listOfRequest[index].id,)));
+                  },
+                  photos: listOfRequest[index].imageCount,
+                  reviews: listOfRequest[index].reviewsCount,
+                  address: listOfRequest[index].address,
+                  index: index
+                );
+              },
+              itemCount: listOfRequest.length,
+            ),
+          ),
+        )
     );
   }
 }

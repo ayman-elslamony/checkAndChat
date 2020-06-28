@@ -24,33 +24,34 @@ class _ActivitiesScreenState extends State<ActivitiesScreen> {
   bool descTextShowFlag = false;
   Future<void> _allActivities;
   bool refresh = true;
-  bool isLoading=true;
- Future<void> _refreshToGetUserData() async{
+  bool isLoading = true;
+  Future<void> _refreshToGetUserData() async {
     //if (refresh) {
     //  _allActivities =
-         await Provider.of<Categorys>(context, listen: false).getAllActivities();
-     // refresh = false;
-   // }
+    await Provider.of<Categorys>(context, listen: false).getAllActivities();
+    // refresh = false;
+    // }
     setState(() {
-      isLoading=false;
+      isLoading = false;
     });
   }
 
   _userId() async {
-    if(Auth.userId ==''){
+    if (Auth.userId == '') {
       userId = await Auth().getUserId;
-    }else{
+    } else {
       userId = Auth.userId;
     }
   }
 
   @override
   void initState() {
-   if(Provider.of<Categorys>(context, listen: false).allActivities.length ==0){
-     _refreshToGetUserData();
-   }else{
-     isLoading=false;
-   }
+    if (Provider.of<Categorys>(context, listen: false).allActivities.length ==
+        0) {
+      _refreshToGetUserData();
+    } else {
+      isLoading = false;
+    }
 
     super.initState();
     _userId();
@@ -61,15 +62,12 @@ class _ActivitiesScreenState extends State<ActivitiesScreen> {
     double _height = MediaQuery.of(context).size.height;
     double _width = MediaQuery.of(context).size.width;
 
-
-    Widget myActivite({Activities activites,int index}) {
+    Widget myActivite({Activities activites, int index}) {
       return Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 12, vertical:6),
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
         child: Container(
           decoration: BoxDecoration(
-            color: Colors.grey[200],
-            borderRadius: BorderRadius.circular(20)
-          ),
+              color: Colors.grey[200], borderRadius: BorderRadius.circular(20)),
           child: ListTile(
             onTap: () {
               Navigator.push(
@@ -83,8 +81,12 @@ class _ActivitiesScreenState extends State<ActivitiesScreen> {
             title: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text(
-                'You added ${activites.type} in ${activites.category.name}',
-                style: TextStyle(color: Colors.grey[700], fontSize: _width * 0.04,fontWeight: FontWeight.bold),
+                '${LocaleKeys.added.tr()} ${activites.type} in ${activites.category.name}',
+                style: TextStyle(
+                    color: Colors.grey[700],
+                    fontSize: _width * 0.04,
+                    fontWeight: FontWeight.bold,
+                    fontFamily: 'Cairo'),
               ),
             ),
             subtitle: Padding(
@@ -100,141 +102,146 @@ class _ActivitiesScreenState extends State<ActivitiesScreen> {
                     )),
               ),
             ),
-            trailing: activites.type == 'Review'?PopupMenuButton<String>(
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(10))),
-                icon: Icon(
-                  Icons.more_vert,
-                  color: Colors.grey,
-                ),
-                itemBuilder: (context) => ['Edit', 'Delete']
-                    .map((String val) => PopupMenuItem<String>(
-                          child: Text(val),
-                          value: val,
-                        ))
-                    .toList(),
-                onSelected: (String val) {
-                  print('E D');
-                  if (val == 'Edit') {
-                    print('E');
-                    Navigator.of(context)
-                        .push(MaterialPageRoute(
+            trailing: activites.type == 'Review'
+                ? PopupMenuButton<String>(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(10))),
+                    icon: Icon(
+                      Icons.more_vert,
+                      color: Colors.grey,
+                    ),
+                    itemBuilder: (context) =>
+                        [LocaleKeys.edit.tr(), LocaleKeys.delete.tr()]
+                            .map((String val) => PopupMenuItem<String>(
+                                  child: Text(val),
+                                  value: val,
+                                ))
+                            .toList(),
+                    onSelected: (String val) {
+                      print('E D');
+                      if (val == 'Edit' || val == 'تعديل') {
+                        print('E');
+                        Navigator.of(context).push(MaterialPageRoute(
                             builder: (context) => StartReview(
                                   category: activites.category,
                                   review: activites.review,
                                 )));
-                  }
-                  if (val == 'Delete') {
-                    print('D');
-                    Provider.of<Categorys>(context, listen: false)
-                        .deleteAReview(
-                      resturant: activites.category,
-                      review: activites.review,
-                    )
-                        .then((x) {
-                      if (x == 'true') {
-                        Toast.show("successfully deleted!", context,
-                            duration: Toast.LENGTH_SHORT,
-                            gravity: Toast.BOTTOM);
-                        setState(() {
-                          refresh = true;
-                        });
-                        _refreshToGetUserData();
-                      } else if (x == 'false') {
-                        Toast.show("failed to delete!", context,
-                            duration: Toast.LENGTH_SHORT,
-                            gravity: Toast.BOTTOM);
                       }
-                    });
-                  }
-                }):PopupMenuButton<String>(
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(10))),
-                icon: Icon(
-                  Icons.more_vert,
-                  color: Colors.grey,
-                ),
-                itemBuilder: (context) => ['Delete']
-                    .map((String val) => PopupMenuItem<String>(
-                          child: Text(val),
-                          value: val,
-                        ))
-                    .toList(),
-                onSelected: (String val) {
-                  print('DD');
-                  if (val == 'Delete') {
-                    if(activites.type == 'Photo'){
-                      print('DP');
-                      UserPhotoForSpecificCategory userPhotoForSpecificCategory =UserPhotoForSpecificCategory(
-                        userId: activites.userId,
-                        date: activites.dateForReview,
-                        type: activites.userId == activites.category.ownerId?'owner':'users',
-                        userName: activites.userName,
-                        userImage: activites.userImgUrl,
-                        categoryImage: activites.review.imgUrlForReview,
-                      );
-                      Provider.of<Categorys>(context, listen: false)
-                          .deletePhoto(
-                        resturant: activites.category,
-                        photosForSpecificCategory: userPhotoForSpecificCategory
-                        ,indexForActivites: index 
-                      )
-                          .then((x) {
-                        if (x == 'true') {
-                          Toast.show("successfully deleted!", context,
-                              duration: Toast.LENGTH_SHORT,
-                              gravity: Toast.BOTTOM);
-                          setState(() {
-                            refresh = true;
+                      if (val == 'Delete' || val == 'حذف') {
+                        print('D');
+                        Provider.of<Categorys>(context, listen: false)
+                            .deleteAReview(
+                          resturant: activites.category,
+                          review: activites.review,
+                        )
+                            .then((x) {
+                          if (x == 'true') {
+                            Toast.show(LocaleKeys.remove.tr(), context,
+                                duration: Toast.LENGTH_SHORT,
+                                gravity: Toast.BOTTOM);
+                            setState(() {
+                              refresh = true;
+                            });
+                            _refreshToGetUserData();
+                          } else if (x == 'false') {
+                            Toast.show(LocaleKeys.failed.tr(), context,
+                                duration: Toast.LENGTH_SHORT,
+                                gravity: Toast.BOTTOM);
+                          }
+                        });
+                      }
+                    })
+                : PopupMenuButton<String>(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(10))),
+                    icon: Icon(
+                      Icons.more_vert,
+                      color: Colors.grey,
+                    ),
+                    itemBuilder: (context) => [LocaleKeys.delete.tr()]
+                        .map((String val) => PopupMenuItem<String>(
+                              child: Text(val),
+                              value: val,
+                            ))
+                        .toList(),
+                    onSelected: (String val) {
+                      print('DD');
+                      if (val == 'Delete' || val == 'حذف') {
+                        if (activites.type == 'Photo') {
+                          print('DP');
+                          UserPhotoForSpecificCategory
+                              userPhotoForSpecificCategory =
+                              UserPhotoForSpecificCategory(
+                            userId: activites.userId,
+                            date: activites.dateForReview,
+                            type: activites.userId == activites.category.ownerId
+                                ? 'owner'
+                                : 'users',
+                            userName: activites.userName,
+                            userImage: activites.userImgUrl,
+                            categoryImage: activites.review.imgUrlForReview,
+                          );
+                          Provider.of<Categorys>(context, listen: false)
+                              .deletePhoto(
+                                  resturant: activites.category,
+                                  photosForSpecificCategory:
+                                      userPhotoForSpecificCategory,
+                                  indexForActivites: index)
+                              .then((x) {
+                            if (x == 'true') {
+                              Toast.show("successfully deleted!", context,
+                                  duration: Toast.LENGTH_SHORT,
+                                  gravity: Toast.BOTTOM);
+                              setState(() {
+                                refresh = true;
+                              });
+                              _refreshToGetUserData();
+                            } else if (x == 'false') {
+                              Toast.show("failed to delete!", context,
+                                  duration: Toast.LENGTH_SHORT,
+                                  gravity: Toast.BOTTOM);
+                            }
                           });
-                          _refreshToGetUserData();
-                        } else if (x == 'false') {
-                          Toast.show("failed to delete!", context,
-                              duration: Toast.LENGTH_SHORT,
-                              gravity: Toast.BOTTOM);
-                        }
-                      });
-                    }else{
-                      print('D C');
-                      Provider.of<Categorys>(context, listen: false)
-                          .deleteCheckIn(
-                        resturant: activites.category,
-                        review: activites.review,
-                      )
-                          .then((x) {
-                        if (x == 'true') {
-                          Toast.show("successfully deleted!", context,
-                              duration: Toast.LENGTH_SHORT,
-                              gravity: Toast.BOTTOM);
-                          setState(() {
-                            refresh = true;
+                        } else {
+                          print('D C');
+                          Provider.of<Categorys>(context, listen: false)
+                              .deleteCheckIn(
+                            resturant: activites.category,
+                            review: activites.review,
+                          )
+                              .then((x) {
+                            if (x == 'true') {
+                              Toast.show("successfully deleted!", context,
+                                  duration: Toast.LENGTH_SHORT,
+                                  gravity: Toast.BOTTOM);
+                              setState(() {
+                                refresh = true;
+                              });
+                              _refreshToGetUserData();
+                            } else if (x == 'false') {
+                              Toast.show("failed to delete!", context,
+                                  duration: Toast.LENGTH_SHORT,
+                                  gravity: Toast.BOTTOM);
+                            }
                           });
-                          _refreshToGetUserData();
-                        } else if (x == 'false') {
-                          Toast.show("failed to delete!", context,
-                              duration: Toast.LENGTH_SHORT,
-                              gravity: Toast.BOTTOM);
                         }
-                      });
-                    }
-                  }
-                }),
+                      }
+                    }),
           ),
         ),
       );
     }
 
-
-
-
-
-
     return Scaffold(
       appBar: AppBar(
-      leading: Navigator.of(context).canPop()?BackButton(
-        color: Colors.white,
-        onPressed: (){Navigator.of(context).pop();},
-      ):null,
+        leading: Navigator.of(context).canPop()
+            ? BackButton(
+                color: Colors.white,
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              )
+            : null,
         titleSpacing: 0.0,
         title: Row(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -257,41 +264,42 @@ class _ActivitiesScreenState extends State<ActivitiesScreen> {
             backgroundColor: Colors.white,
             color: Color(0xffc62828),
             onRefresh: _refreshToGetUserData,
-            child: isLoading?Container(
-                height: _height,
-                width: _width,
-                child: Center(
-                    child: CircularProgressIndicator(
+            child: isLoading
+                ? Container(
+                    height: _height,
+                    width: _width,
+                    child: Center(
+                        child: CircularProgressIndicator(
                       backgroundColor: Color(0xffc62828),
-                    ))):Consumer<Categorys>(
-              builder: (context, dataSnapshot, _) {
-                return Column(
-                  children: <Widget>[
-                    SizedBox(
-                      height: _height*0.84,
-                      child: dataSnapshot.allActivities.length == 0
-                          ? Center(
-                          child: Text(
-                              LocaleKeys.noActivities,
-                            style: TextStyle(
-                                color: Colors.grey[700],
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold),
-                          ).tr(context: context))
-                          : ListView.builder(
-                        itemCount:
-                        dataSnapshot.allActivities.length,
-                        itemBuilder: (context, index) =>
-                            myActivite(
-                                activites: dataSnapshot
-                                    .allActivities[index],index: index),
-                      ),
-                    ),
-
-                  ],
-                );
-              },
-            ),
+                    )))
+                : Consumer<Categorys>(
+                    builder: (context, dataSnapshot, _) {
+                      return Column(
+                        children: <Widget>[
+                          SizedBox(
+                            height: _height * 0.84,
+                            child: dataSnapshot.allActivities.length == 0
+                                ? Center(
+                                    child: Text(
+                                    LocaleKeys.noActivities,
+                                    style: TextStyle(
+                                        color: Colors.grey[700],
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold),
+                                  ).tr(context: context))
+                                : ListView.builder(
+                                    itemCount:
+                                        dataSnapshot.allActivities.length,
+                                    itemBuilder: (context, index) => myActivite(
+                                        activites:
+                                            dataSnapshot.allActivities[index],
+                                        index: index),
+                                  ),
+                          ),
+                        ],
+                      );
+                    },
+                  ),
           ),
         ],
       ),

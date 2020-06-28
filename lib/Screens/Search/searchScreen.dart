@@ -40,14 +40,19 @@ class _SearchState extends State<Search> {
 
   List<String> _allItems = [
     LocaleKeys.restaurants.tr(),
+    LocaleKeys.coffeeShops.tr(),
+    LocaleKeys.accounting.tr(),
+    LocaleKeys.shopping.tr(),
+    LocaleKeys.hospital.tr(),
+    LocaleKeys.pharmacy.tr(),
+    LocaleKeys.gas.tr(),
     // "Restaurants",
-    "Coffee Shop",
-    "Accounting",
-    "Shopping",
-    "Hospital",
-    "Pharmacy",
-    "Gas Station",
-
+    //"Coffee Shop",
+   // "Accounting",
+  //  "Shopping",
+   // "Hospital",
+   // "Pharmacy",
+  //  "Gas Station",
   ];
   final List<String> imgList = [
     'https://i.shgcdn.com/090926b8-3cdf-4326-a80d-0ba0db8d6cba/-/format/auto/-/preview/3000x3000/-/quality/lighter/',
@@ -272,20 +277,20 @@ class _SearchState extends State<Search> {
         child: Column(
           children: <Widget>[
             _searchContent(
-                imgUrl: 'images/nearByIcons/meal.png', title: 'Resturants'),
+                imgUrl: 'images/nearByIcons/meal.png', title:  LocaleKeys.restaurants.tr()),
             _searchContent(
-                imgUrl: 'images/nearByIcons/tea.png', title: 'Coffee Shop'),
+                imgUrl: 'images/nearByIcons/tea.png', title: LocaleKeys.coffeeShops.tr()),
             _searchContent(
                 imgUrl: 'images/nearByIcons/accounting.png',
-                title: 'Accounting'),
+                title:  LocaleKeys.accounting.tr(),),
             _searchContent(
-                imgUrl: 'images/nearByIcons/shopping.png', title: 'Shopping'),
+                imgUrl: 'images/nearByIcons/shopping.png', title:  LocaleKeys.shopping.tr()),
             _searchContent(
-                imgUrl: 'images/nearByIcons/gas.png', title: 'Gas Station'),
+                imgUrl: 'images/nearByIcons/gas.png', title:  LocaleKeys.gas.tr()),
             _searchContent(
-                imgUrl: 'images/nearByIcons/hospital.png', title: 'Hospital'),
+                imgUrl: 'images/nearByIcons/hospital.png', title: LocaleKeys.hospital.tr()),
             _searchContent(
-                imgUrl: 'images/nearByIcons/pharmacy.png', title: 'pharmacy'),
+                imgUrl: 'images/nearByIcons/pharmacy.png', title: LocaleKeys.pharmacy.tr()),
           ],
         ),
       ),
@@ -474,28 +479,28 @@ class _SearchState extends State<Search> {
                             ],
                           ),
                         ),
-                  Center(
-                    child: InkWell(
-                      onTap: result.phone == '' ? null : () {},
-                      child: Container(
-                        width: _width * 0.9,
-                        height: 38.0,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(5.0),
-                            border: Border.all(color: Colors.grey)),
-                        child: Center(
-                          child: Text(
-                            'Call',
-                            style: _textStyle.copyWith(
-                                color: result.phone == ''
-                                    ? Colors.grey
-                                    : Colors.blue,
-                                fontSize: _width * 0.05),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
+//                  Center(
+//                    child: InkWell(
+//                      onTap: result.phone == '' ? null : () {},
+//                      child: Container(
+//                        width: _width * 0.9,
+//                        height: 38.0,
+//                        decoration: BoxDecoration(
+//                            borderRadius: BorderRadius.circular(5.0),
+//                            border: Border.all(color: Colors.grey)),
+//                        child: Center(
+//                          child: Text(
+//                            'Call',
+//                            style: _textStyle.copyWith(
+//                                color: result.phone == ''
+//                                    ? Colors.grey
+//                                    : Colors.blue,
+//                                fontSize: _width * 0.05),
+//                          ),
+//                        ),
+//                      ),
+//                    ),
+//                  ),
                   SizedBox(
                     height: 10,
                   )
@@ -995,8 +1000,8 @@ class _SearchState extends State<Search> {
                         size: 20,
                       ),
                       Text(
-                        '  Filters',
-                        style: _textStyle.copyWith(fontSize: _width*0.04,color: Colors.white),
+                        LocaleKeys.filter.tr(),
+                        style: _textStyle.copyWith(fontSize: _width*0.04,color: Colors.white,fontFamily: 'Cairo'),
                       ),
 
                     ],),

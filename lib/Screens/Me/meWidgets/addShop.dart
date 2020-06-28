@@ -21,13 +21,13 @@ class AddShop extends StatefulWidget {
 
 class _AddShopState extends State<AddShop> {
   List _shopCategory = [
-    "Resturant",
-    "Caffe",
-    "Pharmacy",
-    "Hospital",
-    "Accounting",
-    "shopping",
-    "Car Gas"
+    LocaleKeys.restaurants.tr(),
+    LocaleKeys.coffeeShops.tr(),
+    LocaleKeys.accounting.tr(),
+    LocaleKeys.shopping.tr(),
+    LocaleKeys.hospital.tr(),
+    LocaleKeys.pharmacy.tr(),
+    LocaleKeys.gas.tr(),
   ];
 
   List _shopPrcie = [
@@ -90,15 +90,15 @@ class _AddShopState extends State<AddShop> {
           typeOfServices: types,
         );
         if (x == 'true') {
-          Toast.show("Successfully Regitered", context,
+          Toast.show(LocaleKeys.success.tr(), context,
               duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
           Navigator.of(context).pop();
         } else if (x == 'Already Exists') {
-          Toast.show('Already Exists', context,
+          Toast.show(LocaleKeys.alreadyExist.tr(), context,
               duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
           Navigator.of(context).pop();
         } else {
-          Toast.show("please try again", context,
+          Toast.show(LocaleKeys.tryAgain.tr(), context,
               duration: Toast.LENGTH_SHORT, gravity: Toast.BOTTOM);
         }
         setState(() {
@@ -136,12 +136,12 @@ class _AddShopState extends State<AddShop> {
             padding: EdgeInsets.all(10.0),
             child: Column(children: [
               Text(
-                'Pick an Image',
+                LocaleKeys.pickImage,
                 style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 18,
                     color: Colors.red),
-              ),
+              ).tr(context: context),
               SizedBox(
                 height: 5.0,
               ),
@@ -158,9 +158,9 @@ class _AddShopState extends State<AddShop> {
                     color: Colors.blue,
                     textColor: Theme.of(context).primaryColor,
                     label: Text(
-                      'Use Camera',
-                      style: TextStyle(color: Colors.white),
-                    ),
+                      LocaleKeys.camera,
+                      style: TextStyle(color: Colors.white,fontFamily: 'Cairo'),
+                    ).tr(context: context),
                     onPressed: () {
                       _getImage(ImageSource.camera);
                       // Navigator.of(context).pop();
@@ -176,9 +176,9 @@ class _AddShopState extends State<AddShop> {
                     color: Colors.blue,
                     textColor: Theme.of(context).primaryColor,
                     label: Text(
-                      'Use Gallery',
-                      style: TextStyle(color: Colors.white),
-                    ),
+                      LocaleKeys.gallery,
+                      style: TextStyle(color: Colors.white,fontFamily: 'Cairo'),
+                    ).tr(context: context),
                     onPressed: () {
                       _getImage(ImageSource.gallery);
                       // Navigator.of(context).pop();
@@ -236,13 +236,14 @@ class _AddShopState extends State<AddShop> {
               borderRadius: BorderRadius.all(Radius.circular(25.0))),
           contentPadding: EdgeInsets.only(top: 10.0),
           title: Text(
-            'Location',
+            LocaleKeys.location,
             textAlign: TextAlign.center,
-          ),
+            style: TextStyle(fontFamily: 'Cairo'),
+          ).tr(context: context),
           content: Padding(
             padding: const EdgeInsets.only(top: 10),
             child: Container(
-              height: 100,
+              height: _height*0.25,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
@@ -255,12 +256,12 @@ class _AddShopState extends State<AddShop> {
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Text(
-                            'Get current Location',
+                            LocaleKeys.currentLocation,
                             style: TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.bold,
                                 color: Colors.white),
-                          ),
+                          ).tr(context: context),
                         )),
                   ),
                   InkWell(
@@ -282,12 +283,13 @@ class _AddShopState extends State<AddShop> {
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Text(
-                            'Select Location from Map',
+                            LocaleKeys.selectLocationFromMap,
                             style: TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.bold,
-                                color: Colors.white),
-                          ),
+                                color: Colors.white,
+                            fontFamily: 'Cairo'),
+                          ).tr(context: context),
                         )),
                   ),
                 ],
@@ -296,7 +298,7 @@ class _AddShopState extends State<AddShop> {
           ),
           actions: <Widget>[
             FlatButton(
-              child: Text('Cancel'),
+              child: Text(LocaleKeys.cancel,style: TextStyle(fontFamily: 'Cairo'),).tr(context: context),
               onPressed: () {
                 Navigator.of(ctx).pop();
               },
@@ -621,7 +623,7 @@ class _AddShopState extends State<AddShop> {
                         value: _selectedShopCategory,
                         items: _shopCategory.map((value) {
                           return DropdownMenuItem(
-                            child: Text('  ' + value),
+                            child: Text('  ' + value,style: TextStyle(fontFamily: "Cairo"),),
                             value: value,
                           );
                         }).toList(),
@@ -694,7 +696,7 @@ class _AddShopState extends State<AddShop> {
                         value: _selectedShopPrice,
                         items: _shopPrcie.map((value) {
                           return DropdownMenuItem(
-                            child: Text('  ' + value),
+                            child: Text('  ' + value,style: TextStyle(fontFamily: 'Cairo'),),
                             value: value,
                           );
                         }).toList(),

@@ -180,8 +180,8 @@ bool isOpened=false;
                           ),
                           Positioned(
                               top: 0.0,
-                              left: 0.0,
-                              right: 55,
+                              left: 55,
+                              right: 35,
                               child: Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: SizedBox(
@@ -203,7 +203,7 @@ bool isOpened=false;
                                               filled: true,
                                               labelStyle: TextStyle(
                                                   color: Color(0xffc62828),fontFamily: 'Cairo'),
-                                              labelText: LocaleKeys.searchForLocation,
+                                              labelText: LocaleKeys.searchForLocation.tr(),
                                               focusedBorder: OutlineInputBorder(
                                                 borderRadius: BorderRadius.all(
                                                     Radius.circular(10.0)),

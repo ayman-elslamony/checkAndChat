@@ -17,7 +17,7 @@ import 'Screens/homeScreen.dart';
 import 'Screens/splash_screen.dart';
 import './services/services.dart';
 import 'package:flutter/services.dart' ;
-
+import 'package:checkandchat/chats/const.dart';
 import 'dart:ui';
 import 'dart:developer';
 import 'generated/locale_keys.g.dart';
@@ -77,6 +77,7 @@ class MyApp extends StatelessWidget {
         supportedLocales: context.supportedLocales,
         locale: context.locale,
         theme: ThemeData(
+          primaryColor: themeColor,
           fontFamily: 'Cairo',
           primarySwatch: Colors.red,
           accentColor: Colors.white,
@@ -164,9 +165,10 @@ class CheckAndChat extends StatefulWidget {
 }
 
 class _CheckAndChatState extends State<CheckAndChat> {
-  Auth _auth = GetIt.instance<Auth>();
+  Auth _auth ;//= GetIt.instance<Auth>();
   @override
   void initState() {
+    _auth =Provider.of<Auth>(context,listen: false);
     super.initState();
   }
 

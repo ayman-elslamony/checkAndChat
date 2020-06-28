@@ -781,7 +781,24 @@ print(id);
     notifyListeners();
 
   }
-
+//  Future<void> getFriendDataForHomeChat({String id = ''})async{
+//    String userId;
+//    CollectionReference mainCollection = databaseReference.collection('users');
+//    DocumentSnapshot document;
+//    if (id == '') {
+//      if (Auth.userId == '') {
+//        userId = await Auth().getUserId;
+//      } else {
+//        userId = Auth.userId;
+//      }
+//    } else {
+//      userId = id;
+//    }
+//    QuerySnapshot doc = await mainCollection
+//        .document(userId)
+//        .collection('chat')
+//        .getDocuments();
+//  }
   Future<String> createCollection(
       {Category category,
       String nameOfCollection = '',

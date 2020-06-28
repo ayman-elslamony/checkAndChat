@@ -2,7 +2,8 @@ import 'package:checkandchat/Providers/resturants.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:toast/toast.dart';
-
+import 'package:checkandchat/generated/locale_keys.g.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'container_of_dollars.dart';
 
 class FiltersContent extends StatefulWidget {
@@ -57,7 +58,13 @@ class _FiltersContentState extends State<FiltersContent> {
 //  }
 //  };
 
- static List<String> _dolarsCount = ['Free','Inexpensive','Moderate','Expensive','Very Expensive'];
+ static List<String> _dolarsCount = [
+   LocaleKeys.free.tr().trim(),
+   LocaleKeys.inexpensive.tr().trim(),
+   LocaleKeys.moderate.tr().trim(),
+   LocaleKeys.expensive.tr().trim(),
+   LocaleKeys.veryExpensive.tr().trim(),
+ ];
  static List<bool> _changeContainerColor = List.generate(5, (index)=>false);
  static List<String> _priceLevel = List<String>();
  static double dist=0.0;
@@ -160,9 +167,10 @@ class _FiltersContentState extends State<FiltersContent> {
             borderRadius: BorderRadius.all(Radius.circular(25.0))),
         contentPadding: EdgeInsets.only(top: 10.0),
         title: Text(
-          'Filters',
+          LocaleKeys.filter,
           textAlign: TextAlign.center,
-        ),
+          style: TextStyle(fontFamily: 'Cairo'),
+        ).tr(context: context),
         content: Padding(
           padding: const EdgeInsets.all(8.0),
           child: SingleChildScrollView(
@@ -175,7 +183,7 @@ class _FiltersContentState extends State<FiltersContent> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: <Widget>[
-                      SizedBox(width: 15,),Text('Price',style:  _textStyle.copyWith(fontSize: 15),),
+                      SizedBox(width: 15,),Text(LocaleKeys.price,style:  _textStyle.copyWith(fontSize: 15,),).tr(context: context),
                     ],
                   ),
                 ),
@@ -204,6 +212,7 @@ class _FiltersContentState extends State<FiltersContent> {
                               borderRadius: BorderRadius.circular(5.0),
                             ),
                             child: Center(child: Text(_dolarsCount[index],style: TextStyle(
+                                fontFamily: 'Cairo',
                                 color: _changeContainerColor[index] == false ?Colors.black : Colors.white
                             ),)),
                           ),
@@ -220,9 +229,9 @@ class _FiltersContentState extends State<FiltersContent> {
                // _switchedButton(title: 'Hot and New',path: 'Popular'),
             ListTile(
                 title: Text(
-                  'Open Now',
+                  LocaleKeys.openNow,
                   style: _textStyle.copyWith(fontSize: 15),
-                ),
+                ).tr(context: context),
                 trailing: Switch(
                     activeTrackColor: Colors.redAccent,
                     activeColor: Color(0xffc62828),
@@ -236,7 +245,7 @@ class _FiltersContentState extends State<FiltersContent> {
             _divider(),
              //   _switchedButton(title: 'Open Now',path: 'Popular'),
                 ListTile(
-                  title: Text('Distance'),
+                  title: Text(LocaleKeys.distance,style: TextStyle(fontFamily: 'Cairo'),).tr(context: context),
                   trailing: DropdownButton<String>(
                       items: _dropdownMenuItem(list: _distance),
                       value: _filters['distance'],
@@ -247,7 +256,7 @@ class _FiltersContentState extends State<FiltersContent> {
                       }),
                 ),
                 ListTile(
-                  title: Text('Sort by'),
+                  title: Text(LocaleKeys.sortBy,style: TextStyle(fontFamily: 'Cairo'),).tr(context: context),
                   trailing: DropdownButton<String>(
                       items: _dropdownMenuItem(list: _sortedby),
                       value: _filters['SortBy'],
@@ -333,17 +342,13 @@ class _FiltersContentState extends State<FiltersContent> {
         ),
         actions: <Widget>[
           FlatButton(
-            child: Text('Cancel',style: TextStyle(fontSize: 18,color: Colors.grey),),
+            child: Text(LocaleKeys.cancel,style: TextStyle(fontSize: 18,color: Colors.grey,fontFamily: 'Cairo'),).tr(context: context),
             onPressed: () {
               Navigator.of(context).pop();
             },
           ),
           FlatButton(
-            child: Text(
-              'Search',
-              style: TextStyle(fontSize: 18,color: Color(0xffc62828)),
-              
-            ),
+              child: Text(LocaleKeys.search,style: TextStyle(fontSize: 18,color: Color(0xffc62828),fontFamily: 'Cairo'),).tr(context: context),
             onPressed: () {
               _priceLevel.clear();
               _changeContainerColor.length;
@@ -410,7 +415,7 @@ class _FiltersContentState extends State<FiltersContent> {
               },
           ),
           dist!=0.0 ||rating!=0.0|| _changeContainerColor.contains(true)||_priceLevel.length>0||_filters['openNow']==true?FlatButton(
-            child: Text('Reset',style: TextStyle(fontSize: 18,color: Colors.grey),),
+            child: Text(LocaleKeys.reset,style: TextStyle(fontSize: 18,color: Colors.grey,fontFamily: 'Cairo'),).tr(context: context),
             onPressed: () {
               _resetFilters();
 

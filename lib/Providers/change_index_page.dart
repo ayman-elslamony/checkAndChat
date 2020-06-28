@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class ChangeIndex with ChangeNotifier {
-  int index =4;
+  int index =2;
 
 
   void changeIndexFunction(int index) {

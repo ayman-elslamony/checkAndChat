@@ -1,5 +1,5 @@
 import 'dart:convert';
-
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:checkandchat/Providers/user_data.dart';
 import 'package:checkandchat/models/http_exception.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -11,7 +11,6 @@ import 'package:geocoder/model.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class Auth with ChangeNotifier {
   var firebaseAuth = FirebaseAuth.instance;
@@ -91,17 +90,18 @@ String get myAddress{
      var users = databaseReference.collection("users");
      if(userId ==''){
        await getUserId.then((id){
-         users.document(id).updateData({
+        users.document(id).updateData({
            'address': _address,
          });
        });
      }else{
-       users.document(userId).updateData({
+       await users.document(userId).updateData({
          'address': _address,
        });
      }
 
      return true;
+
    }catch (e){
      if(!prefs.containsKey('userLocation')){
        _currentLatLng =LatLng(23.8859425, 45.0791626);
@@ -189,8 +189,9 @@ Future<bool> tryToLogin() async {
         });
       }
       if(prefs.containsKey('userLocation')){
-        final userLocation = await json.decode( prefs.getString('userLocation')) as Map<String, Object>;
-        _currentLatLng = userLocation['LatLng'];
+        final userLocation = await json.decode(prefs.getString('userLocation')) as Map<String, Object>;
+        List x = userLocation['LatLng'] as List;
+        _currentLatLng = LatLng(x[0],x[1]);
         _address = userLocation['address'];
       }
       if(_token ==null){

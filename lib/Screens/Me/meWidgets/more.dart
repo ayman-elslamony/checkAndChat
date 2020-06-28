@@ -77,7 +77,7 @@ class _MoreState extends State<More> {
         onPressed: () => Navigator.pop(context),
         icon: Icon(Icons.arrow_back, color: Colors.white),
       ),
-      Text('More',style: TextStyle(color: Colors.white,fontSize: _width*0.045),),
+      Text(LocaleKeys.more.tr(),style: TextStyle(color: Colors.white,fontSize: _width*0.045,fontFamily: 'Cairo'),),
     ],
   ),
         backgroundColor: Color(0xffc62828),
@@ -97,22 +97,22 @@ class _MoreState extends State<More> {
           _expantion(
                       icon1: ImageIcon(AssetImage('images/meScreenIcons/instractions.png')),
                       icon2: Icons.expand_more,
-                      titleText:  Text('Instructions',style: TextStyle(color: Colors.grey[850],fontSize: _width*0.035,fontWeight: FontWeight.w700)), 
+                      titleText:  Text(LocaleKeys.instructions.tr(),style: TextStyle(color: Colors.grey[850],fontSize: _width*0.035,fontWeight: FontWeight.w700,fontFamily: 'Cairo')),
                       text: Padding(
                         padding: const EdgeInsets.all(20.0),
-                        child: Text('In search Screan You can find any place you looking for , and You can tell your friends about it via Chat',
-                        style: TextStyle(color: Colors.grey[850],fontSize: _width*0.035)),
+                        child: Text(LocaleKeys.instructionsDescription.tr(),
+                        style: TextStyle(color: Colors.grey[850],fontSize: _width*0.035,fontFamily: 'Cairo')),
                       ) 
                     ),
           _divider(),
           _expantion(
                       icon1: ImageIcon(AssetImage('images/meScreenIcons/instractions.png')),
                       icon2: Icons.expand_more,
-                      titleText:  Text('About',style: TextStyle(color: Colors.grey[850],fontSize: _width*0.035,fontWeight: FontWeight.w700)), 
+                      titleText:  Text(LocaleKeys.about.tr(),style: TextStyle(color: Colors.grey[850],fontFamily: 'Cairo',fontSize: _width*0.035,fontWeight: FontWeight.w700)),
                       text: Padding(
                         padding: const EdgeInsets.all(20.0),
-                        child: Text('Check and Chat is a commuincation app you can use to connect and hangout with your friends',
-                        style: TextStyle(color: Colors.grey[850],fontSize: _width*0.035)),
+                        child: Text(LocaleKeys.aboutDescription.tr(),
+                        style: TextStyle(color: Colors.grey[850],fontSize: _width*0.035,fontFamily: 'Cairo')),
                       ) 
                       
                        ),

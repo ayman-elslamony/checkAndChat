@@ -54,6 +54,7 @@ class _SignUpState extends State<SignUp> {
            bool auth = await Provider.of<Auth>(context, listen: false).signInUsingEmail(
               email: email.trim(), password: password.trim());
             if (auth == true) {
+              await getLocation();
               Toast.show(
                   "successfully Sign Up", context, duration: Toast.LENGTH_SHORT,
                   gravity: Toast.BOTTOM);
@@ -99,9 +100,9 @@ class _SignUpState extends State<SignUp> {
     }
   }
 
-  getLocation() {
+  getLocation() async{
     try {
-      Provider.of<Auth>(context, listen: false).getLocation();
+      await Provider.of<Auth>(context, listen: false).getLocation();
     } on HttpException catch (error) {
       switch (error.toString()) {
         case "PERMISSION_DENIED":
@@ -352,9 +353,9 @@ class _SignUpState extends State<SignUp> {
                                         _isSignInUsingGoogleSuccessful=false;
                                       });
                                     }else{
+                                      await getLocation();
                                       Toast.show("successfully Sign Up", context, duration: Toast.LENGTH_SHORT, gravity:  Toast.BOTTOM);
                                       Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=>HomeScreen()));
-                                      getLocation();
                                     }
 
                             },

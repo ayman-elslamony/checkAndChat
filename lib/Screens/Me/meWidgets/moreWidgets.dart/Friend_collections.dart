@@ -70,14 +70,24 @@ class _FriendsCollectionsState extends State<FriendsCollections> {
                             trailing: RaisedButton(
                               onPressed: () async{
                                 if(isMeFollowing){
-                                  await Provider.of<Categorys>(context,listen: false).deleteFromFollowingCollections(
+                                  bool x =await Provider.of<Categorys>(context,listen: false).deleteFromFollowingCollections(
                                     collectionId: collectionId,
                                   );
+                                  if(x){
+                                    setState(() {
+                                     isMeFollowing = false;
+                                    });
+                                  }
                                 }else{
-                                 await Provider.of<Categorys>(context,listen: false).addToFollowingCollections(
-                                    friendId: friendId,
+                                  bool x =await Provider.of<Categorys>(context,listen: false).addToFollowingCollections(
+                                    friendId: widget.friendId,
                                     collectionId: collectionId,
                                   );
+                                  if(x){
+                                    setState(() {
+                                      isMeFollowing = true;
+                                    });
+                                  }
                                 }
 
                               },

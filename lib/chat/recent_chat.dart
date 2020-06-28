@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../chat/user_chat_screen.dart';
 import '../models/message_model.dart';
+import '../generated/locale_keys.g.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 class RecentChats extends StatefulWidget {
   @override
@@ -63,7 +65,7 @@ class _RecentChatsState extends State<RecentChats> {
                   ? Column(
                       children: <Widget>[
                         SizedBox(height:_height*0.35),
-                        Center(child: Text('There is no chats yet',style: TextStyle(color:Colors.grey[700],fontSize: 18),)),
+                        Center(child: Text(LocaleKeys.noChats.tr(),style: TextStyle(color:Colors.grey[700],fontSize: 18,fontFamily: 'Cairo'),)),
                       ],
                     )
                   : ListView.builder(

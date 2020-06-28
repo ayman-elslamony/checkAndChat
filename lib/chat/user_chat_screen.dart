@@ -8,6 +8,10 @@ import 'package:provider/provider.dart';
 import '../models/message_model.dart';
 import '../models/user_model.dart';
 import 'package:flutter/services.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 import '../generated/locale_keys.g.dart';
 import 'package:easy_localization/easy_localization.dart';
 
@@ -140,36 +144,32 @@ class _ChatScreenState extends State<ChatScreen> {
                   bottomRight: Radius.circular(15.0),
                 ),
         ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-            Text(
-              message.time,
-              style: TextStyle(
-                color: Colors.blueGrey,
-                fontSize: _width * 0.03,
-                fontWeight: FontWeight.w600,
-              ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Text(
+                  message.time,
+                  style: TextStyle(
+                    color: Colors.blueGrey,
+                    fontSize: _width * 0.03,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                SizedBox(height: 8.0),
+                Text(
+                  message.text,
+                  style: TextStyle(
+                    color: Colors.blueGrey,
+                    fontSize: _width * 0.035,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ],
             ),
-            SizedBox(height: 8.0),
-            Text(
-              message.text,
-              style: TextStyle(
-                color: Colors.blueGrey,
-                fontSize: _width * 0.035,
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-          ],
-        ),
-      );
-      if (!isMe) {
-        return msg;
-      } else {
-        return Row(
-          children: <Widget>[
-            msg,
-            IconButton(
+            !isMe?SizedBox():IconButton(
               icon: message.isLiked
                   ? Icon(Icons.favorite)
                   : Icon(Icons.favorite_border),
@@ -192,6 +192,16 @@ class _ChatScreenState extends State<ChatScreen> {
                 });
               },
             )
+          ],
+        ),
+      );
+      if (!isMe) {
+        return msg;
+      } else {
+        return Row(
+          children: <Widget>[
+            msg,
+
           ],
         );
       }
@@ -219,7 +229,7 @@ class _ChatScreenState extends State<ChatScreen> {
                 onChanged: (value) {},
                 decoration: InputDecoration.collapsed(
                     hintText: LocaleKeys.sendMessage.tr(),
-                    hintStyle: TextStyle(fontSize: _width * 0.045)),
+                    hintStyle: TextStyle(fontSize: _width * 0.045,fontFamily: 'Cairo')),
               ),
             ),
             IconButton(
@@ -320,51 +330,101 @@ class _ChatScreenState extends State<ChatScreen> {
                     topLeft: Radius.circular(30.0),
                     topRight: Radius.circular(30.0),
                   ),
-                  child: Consumer<UserData>(
-                    builder: (ctx, reviewData, _) => ListView.builder(
-                      reverse: false,
-                      padding: EdgeInsets.only(top: 15.0),
-                      itemCount: _mess.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        // if(snapshot.hasData){
-                        //   print(snapshot.data);
-                        //     _mess[index].id == userId?messages.add(
-                        //     Message(
-                        //       id: userId,
-                        //       text: snapshot.data,
-                        //       isLiked: false,
-                        //       unread: true,
-                        //       time: time.toString(),
-                        //       )
-                        //       ):
-                        //       messages.add(
-                        //     Message(
-                        //       id: widget.friendId,
-                        //       text: snapshot.data,
-                        //       isLiked: false,
-                        //       unread: true,
-                        //       time: time.toString(),
-                        //       )
-                        //       );
+                  child:
+                    StreamBuilder(
+                      stream:  Firestore.instance
+                          .collection('users')
+                          .document(userId)
+                          .collection('chat')
+                          .document(widget.friendId)
+                          .collection('messages')
+                          .orderBy('timestamp', descending: true)
+                          .limit(20)
+                          .snapshots(),
+                      builder: (context, snapshot) {
+                          if (!snapshot.hasData) {
+                          return Center(
+                          child: CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(Colors.red)));
+                          }
+                          else {
+                            print('dfgdfhjhgfdfgfdfde');
+                            for(int i=0; i<snapshot.data.documents.length;i++){
+                              print(snapshot.data.documents[i].documentID); print(snapshot.data.documents[i]['text']);
+                              print(snapshot.data.documents[i]['isLiked']); print(snapshot.data.documents[i]['time'].toString());
+                              print(snapshot.data.documents[i]['unread']); print(snapshot.data.documents[i]['userId']);
+                              _mess.add(Message(
+                                  id:snapshot.data.documents[i].documentID,
+                                  text:snapshot.data.documents[i]['text'],
+                                  isLiked:snapshot.data.documents[i]['isLiked'],
+                                  time:snapshot.data.documents[i]['time'].toString(),
+                                  unread:snapshot.data.documents[i]['unread'],
+                                  friendId:snapshot.data.documents[i]['userId']
+                              ));
+                            }
+                            return ListView.builder(
+                              padding: EdgeInsets.all(10.0),
+                              itemBuilder: (context, index) {
+                                if (_mess[index].friendId != userId) {
+                                isMe = true;
+                                } else {
+                                isMe = false;
+                                }
+                                return _buildMessage(_mess[index], isMe, index);
+                              },
 
-                        //        }
-                        // final Message message = messages[index];
+                              itemCount: snapshot.data.documents.length,
+                              reverse: true,
+//                              controller: listScrollController,
+                            );
+                          }
 
-//                             if(_mess[index].id == widget.friendId){
-//                               isFriend=false;
-//                             }
-                        print(_mess[index].friendId);
-                        print(userId);
-
-                        if (_mess[index].friendId != userId) {
-                          isMe = true;
-                        } else {
-                          isMe = false;
-                        }
-                        return _buildMessage(_mess[index], isMe, index);
-                      },
-                    ),
-                  ),
+                      }
+                    )
+//                  Consumer<UserData>(
+//                    builder: (ctx, reviewData, _) => ListView.builder(
+//                      reverse: false,
+//                      padding: EdgeInsets.only(top: 15.0),
+//                      itemCount: _mess.length,
+//                      itemBuilder: (BuildContext context, int index) {
+//                        // if(snapshot.hasData){
+//                        //   print(snapshot.data);
+//                        //     _mess[index].id == userId?messages.add(
+//                        //     Message(
+//                        //       id: userId,
+//                        //       text: snapshot.data,
+//                        //       isLiked: false,
+//                        //       unread: true,
+//                        //       time: time.toString(),
+//                        //       )
+//                        //       ):
+//                        //       messages.add(
+//                        //     Message(
+//                        //       id: widget.friendId,
+//                        //       text: snapshot.data,
+//                        //       isLiked: false,
+//                        //       unread: true,
+//                        //       time: time.toString(),
+//                        //       )
+//                        //       );
+//
+//                        //        }
+//                        // final Message message = messages[index];
+//
+////                             if(_mess[index].id == widget.friendId){
+////                               isFriend=false;
+////                             }
+//                        print(_mess[index].friendId);
+//                        print(userId);
+//
+//                        if (_mess[index].friendId != userId) {
+//                          isMe = true;
+//                        } else {
+//                          isMe = false;
+//                        }
+//                        return _buildMessage(_mess[index], isMe, index);
+//                      },
+//                    ),
+//                  ),
                 ),
               ),
             ),

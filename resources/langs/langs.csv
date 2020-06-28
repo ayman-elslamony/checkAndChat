@@ -25,25 +25,52 @@ description,Change your Number, تغيير رقم الهاتف,Hallo Frau :),П�
 myShop,My Shop,المحل الخاص بي,Hi Mann ;) {},Привет мужык ;) {}
 addShop,Add Shop,  إضافة محل  ,Hi Mann ;) {},Привет мужык ;) {}
 country,Country,الدولة  ,Hi Mann ;) {},Привет мужык ;) {}
+postReview,Post Review,نشر التعليق,Hi Mann ;) {},Привет мужык ;) {}
+example,Example: This is probably my favorite steakhouse in town,مثال: هذا أفضل مطعم في المدينة ,Hi Mann ;) {},Привет мужык ;) {}
+startReview,Start a Review ...,إضافة تعليق ...,Hi Mann ;) {},Привет мужык ;) {}
 shopInfo,Required Information,بيانات المحل (إلزامية)  ,Hi Mann ;) {},Привет мужык ;) {}
 shopName,Shop Name  ,اسم المحل    ,Hi Mann ;) {},Привет мужык ;) {}
 shopPhone,Shop Phone  ,هاتف المحل   ,Hi Mann ;) {},Привет мужык ;) {}
 shopLocation,Shop Location   ,موقع المحل   ,Hi Mann ;) {},Привет мужык ;) {}
 shopCategory,Shop Category  ,نوع المحل   ,Hi Mann ;) {},Привет мужык ;) {}
 serviceType,Service Type  ,نوع الخدمة   ,Hi Mann ;) {},Привет мужык ;) {}
-priceLevel, Price Level ,    مستوى السعر    ,Hi Mann ;) {},Привет мужык ;) {}
-addPhoto,add Image ,   إضافة صورة,Deine Klicks: {},Твой счет : {}
+priceLevel, Price Level ,مستوى السعر,Hi Mann ;) {},Привет мужык ;) {}
+addPhoto,Add Photo ,إضافة صورة,Deine Klicks: {},Твой счет : {}
 shopTime,Open shop in all days start: ,  مواعيد المحل في جميع أيام الأسبوع :,Deine Klicks: {},Твой счет : {}
 from,From : , من :  ,Deine Klicks: {},Твой счет : {}
 to,To :  , إلى :  ,Deine Klicks: {},Твой счет : {}
 optionalInfo,Optional Information,معلومات إضافية (إختياري),Deine Klicks: {},Твой счет : {}
 webSite,webSite ,  الموقع الإلكترونى ,Deine Klicks: {},Твой счет : {}
+addToCollection,Add To Collection ,إضافة للألبومات,Deine Klicks: {},Твой счет : {}
+checkIn,Check In,توثيق,Deine Klicks: {},Твой счет : {}
+mobileNotAvailable,Sorry Mobile Not Available!,رقم الهاتف غير متاح,Deine Klicks: {},Твой счет : {}
+basicInformation,Place Information,معلومات عن المحل,Deine Klicks: {},Твой счет : {}
 register,Register , تسجيل ,Deine Klicks: {},Твой счет : {}
-free,free , مجانى ,Deine Klicks: {},Твой счет : {}
-inexpensive,inexpensive , رخيص ,Deine Klicks: {},Твой счет : {}
-moderate,moderate , متوسط ,Deine Klicks: {},Твой счет : {}
-expensive,expensive ,ٍغالى,Deine Klicks: {},Твой счет : {}
-veryExpensive,veryExpensive , غالى جداً ,Deine Klicks: {},Твой счет : {}
+call,Tap here to call,اتصل بالمحل,Deine Klicks: {},Твой счет : {}
+all,See All,عرض الصور,Deine Klicks: {},Твой счет : {}
+distanceFromYou,Distance From You,المسافة بينك وبين المكان,Deine Klicks: {},Твой счет : {}
+free,Free,مجانى,Deine Klicks: {},Твой счет : {}
+unFollow,unFollow,إلغاء المتابعة,Deine Klicks: {},Твой счет : {}
+reset,Reset,ضبط,Deine Klicks: {},Твой счет : {}
+follow,follow,متابعة,Deine Klicks: {},Твой счет : {}
+instructions,Instructions,التعليمات ,Deine Klicks: {},Твой счет : {}
+about,About,حول التطبيق,Deine Klicks: {},Твой счет : {}
+instructionsDescription,In Search Screan You can find any place you looking for and You can tell your friends about it via Chat,من خلال صفحة البحث يمكنك أيجاد المكان الذي تبحث عنه ، أخبر أصدقائك عن طريق الدردشة واذهبوا سوياً,Deine Klicks: {},Твой счет : {}
+aboutDescription,Check and Chat is a commuincation app you can use to connect and hangout with your friends,هذا التطبيق وسيلة تواصل إجتماعى تمكنك من التواصل والخروج مع الأصدقاء,Deine Klicks: {},Твой счет : {}
+follow,follow,متابعة,Deine Klicks: {},Твой счет : {}
+added,You added,لقد قمت إضافة ,Deine Klicks: {},Твой счет : {}
+remove,Successfully Removed,تمت الإزالة,Deine Klicks: {},Твой счет : {}
+save,Save,حفظ,Deine Klicks: {},Твой счет : {}
+price,Price,السعر,Deine Klicks: {},Твой счет : {}
+ok,Ok,موافق,Deine Klicks: {},Твой счет : {}
+distance,Distance,المسافة,Deine Klicks: {},Твой счет : {}
+openNow,Open Now,مفتوح الآن,Deine Klicks: {},Твой счет : {}
+sortBy,Sort By,ترتيب حسب,Deine Klicks: {},Твой счет : {}
+defaultSort,Default,إفتراضي,Deine Klicks: {},Твой счет : {}
+inexpensive,Inexpensive, رخيص ,Deine Klicks: {},Твой счет : {}
+moderate,Moderate, متوسط ,Deine Klicks: {},Твой счет : {}
+expensive,Expensive,غالى,Deine Klicks: {},Твой счет : {}
+veryExpensive,Very Expensive, غالى جداً ,Deine Klicks: {},Твой счет : {}
 myShopAlert, You do not have Shop yet !,ليس لديك محل حتى الان !,Hi Mann ;) {},Привет мужык ;) {}
 friendsList,Friends,الأصدقاء,Hallo Frau :) {},Привет девчуля :) {}
 findF,Find Friends,البحث عن الأصدقاء,Hallo Frau :) {},Привет девчуля :) {}
@@ -59,6 +86,21 @@ redoSearch,Redo Search for this Location,اعادة البحث لهذا المو
 searchForLocation,Search For Location,ابحث عن الموقع,Gespeicherte Sprache zurГјcksettzen,Сбросить сохраненный язык
 language,Language,اللغة,Gespeicherte Sprache zurГјcksettzen,Сбросить сохраненный язык
 cancel,cancel,إلغاء,Gespeicherte Sprache zurГјcksettzen,Сбросить сохраненный язык
+camera,Camera,الكاميرا,Gespeicherte Sprache zurГјcksettzen,Сбросить сохраненный язык
+gallery,Gallery,الاستوديو,Gespeicherte Sprache zurГјcksettzen,Сбросить сохраненный язык
+location,Location,الموقع,Gespeicherte Sprache zurГјcksettzen,Сбросить сохраненный язык
+search,search,بحث,Gespeicherte Sprache zurГјcksettzen,Сбросить сохраненный язык
+failed,Failed!,فشل!,Gespeicherte Sprache zurГјcksettzen,Сбросить сохраненный язык
+edit,Edit,تعديل,Gespeicherte Sprache zurГјcksettzen,Сбросить сохраненный язык
+delete,Delete,حذف,Gespeicherte Sprache zurГјcksettzen,Сбросить сохраненный язык
+noChats,There are no Chats yet,لا يوجد دردشات حتى الآن,Gespeicherte Sprache zurГјcksettzen,Сбросить сохраненный язык
+selectLocationFromMap,Select Location FromMap,اختر موقعاً من الخريطة,Gespeicherte Sprache zurГјcksettzen,Сбросить сохраненный язык
+pickImage,Pick an Image,إلتقط صورة,Gespeicherte Sprache zurГјcksettzen,Сбросить сохраненный язык
+tryAgain,Try Again,حاول ثانيةً,Gespeicherte Sprache zurГјcksettzen,Сбросить сохраненный язык
+alreadyExist,Already Exist,موجود بالفعل,Gespeicherte Sprache zurГјcksettzen,Сбросить сохраненный язык
+success,Success,تمت العملية بنجاح,Gespeicherte Sprache zurГјcksettzen,Сбросить сохраненный язык
+noFriends,There are no friends yet!, لا يوجد أصدقاء حتى الآن!,Gespeicherte Sprache zurГјcksettzen,Сбросить сохраненный язык
+noFriendRequests,There are no friend Requests yet!, لا يوجد طلبات صداقة حتى الآن!,Gespeicherte Sprache zurГјcksettzen,Сбросить сохраненный язык
 sendMessage,Send a Message ... ,اكتب رسالة ...,Gespeicherte Sprache zurГјcksettzen,Сбросить сохраненный язык
 currentLocation,Current Location,الموقع الحالى,Gespeicherte Sprache zurГјcksettzen,Сбросить сохраненный язык
 addShopDescription,Want to add your own shop ?,هل تريد إضافة المحل الخاص بك ؟,Gespeicherte Sprache zurГјcksettzen,Сбросить сохраненный язык

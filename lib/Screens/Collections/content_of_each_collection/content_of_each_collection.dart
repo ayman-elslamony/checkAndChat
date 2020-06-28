@@ -7,6 +7,9 @@ import 'package:intl/intl.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import '../../Search/searchWidgets/item_details/item_details.dart';
 import 'package:toast/toast.dart';
+import '../../../generated/locale_keys.g.dart';
+import 'package:easy_localization/easy_localization.dart';
+
 class ContentOfCollection extends StatefulWidget {
   String collectionName;
   String imgUrlForCollection;
@@ -326,22 +329,34 @@ class _ContentOfCollectionState extends State<ContentOfCollection> {
               child: RaisedButton(
                 onPressed: () async{
                   if(widget.isMeFollowing){
-                    await Provider.of<Categorys>(context,listen: false).deleteFromFollowingCollections(
+                    bool x =await Provider.of<Categorys>(context,listen: false).deleteFromFollowingCollections(
                       collectionId: widget.collectionId,
                     );
+                    if(x){
+                      setState(() {
+                        widget.isMeFollowing = false;
+                      });
+                    }
                   }else{
-                    await Provider.of<Categorys>(context,listen: false).addToFollowingCollections(
+                    bool x =await Provider.of<Categorys>(context,listen: false).addToFollowingCollections(
                       friendId: widget.friendId,
                       collectionId: widget.collectionId,
                     );
+                    if(x){
+                      setState(() {
+                        widget.isMeFollowing = true;
+                      });
+                    }
                   }
 
                 },
-                color: Colors.white30,
+                color: Colors.transparent,
+                elevation: 0,
                 child: Text(
-                  widget.isMeFollowing?'UnFollow':'Follow',
+                  widget.isMeFollowing?LocaleKeys.unFollow.tr():LocaleKeys.follow.tr(),
                   style: TextStyle(
                       fontSize: 14,
+                      fontFamily: 'Cairo',
                       fontWeight: FontWeight.w800,
                       color: Colors.white),
                 ),

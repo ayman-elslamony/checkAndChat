@@ -258,7 +258,7 @@ await mainCollection
   }) async {
     String type = 'caterory';
     if (businessCategory != '') {
-      if (businessCategory == 'Resturant') {
+      if (businessCategory == 'Resturant' ||businessCategory == 'مطاعم' ) {
         type = 'restaurant';
       } else if (businessCategory == 'Caffe') {
         type = 'cafe';
@@ -368,7 +368,8 @@ Future<bool> isHaveShop()async{
     return false;
   }
 }
-  Future<Category> getMyShop() async {
+
+Future<Category> getMyShop() async {
     Category myCategory;
     try {
       String userId;
@@ -425,9 +426,7 @@ Future<bool> isHaveShop()async{
       print(e.message);
     }
   }
-
-
-  Future<bool> changeName({String name}) async {
+Future<bool> changeName({String name}) async {
     try {
       String userId;
       if (Auth.userId == '') {
@@ -674,7 +673,7 @@ Future<bool> isHaveShop()async{
     notifyListeners();
   }
 
-  unFriend({String friendID, UserData friendDeta}) async {
+  unFriend({String friendID, UserData friendDeta,bool isCommingFromFriendRequest=false}) async {
     String userId;
     if (Auth.userId == '') {
       userId = await Auth().getUserId;
@@ -749,11 +748,14 @@ Future<bool> isHaveShop()async{
     //    }else{
     //      _userData.isFriendAdded=  'false';
     //    }
-    friendDeta.isFriendAdded = 'false';
-    notifyListeners();
+
+    if(isCommingFromFriendRequest==false){
+      friendDeta.isFriendAdded = 'false';
+      notifyListeners();
+    }
   }
 
-  acceptFriend({String friendID, UserData friendDeta}) async {
+  acceptFriend({String friendID, UserData friendDeta,bool isCommingFromFriendRequest=false}) async {
     String userId;
     if (Auth.userId == '') {
       userId = await Auth().getUserId;
@@ -813,18 +815,23 @@ Future<bool> isHaveShop()async{
         .collection('friends')
         .document(id)
         .get();
-    if (friendData != null && friendData.exists) {
-      if (friendData['isMeSendRequest']) {
-        friendDeta.isFriendAdded = 'isMeSendRequest';
-      } else {
-        friendDeta.isFriendAdded = 'notMeSendRequest';
-      }
-    } else if (isFriends.exists && isFriends != null) {
+
+//
+//    if (friendData != null && friendData.exists) {
+//      if (friendData['isMeSendRequest']) {
+//        friendDeta.isFriendAdded = 'isMeSendRequest';
+//      } else {
+//        friendDeta.isFriendAdded = 'notMeSendRequest';
+//      }
+//    } else if (isFriends.exists && isFriends != null) {
+//
+//    } else {
+//      friendDeta.isFriendAdded = 'false';
+//    }
+    if(isCommingFromFriendRequest==false){
       friendDeta.isFriendAdded = 'alreadyFriends';
-    } else {
-      friendDeta.isFriendAdded = 'false';
+      notifyListeners();
     }
-    notifyListeners();
   }
 
   Future<void> getAllFriends({String id = ''}) async {
