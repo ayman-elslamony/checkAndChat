@@ -1,0 +1,183 @@
+{
+  "project_info": {
+    "project_number": "743698231818",
+    "firebase_url": "https://tatx-eb224.firebaseio.com",
+    "project_id": "tatx-eb224",
+    "storage_bucket": "tatx-eb224.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:743698231818:android:69bf1ce23bb6cc2695e5f3",
+        "android_client_info": {
+          "package_name": "com.tatx.partner"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "743698231818-0d7gu6ctgn1buvojpaq0lbk4p2motdjk.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.tatx.partner",
+            "certificate_hash": "44619c7606b3dccafe64679444b6a123cb90ad65"
+          }
+        },
+        {
+          "client_id": "743698231818-v7dbbj8qdm2a07o9grq7tsmqh00m19q0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.tatx.partner",
+            "certificate_hash": "4fd638d6b0fffa1e004d1eebdadeaaebd79560bf"
+          }
+        },
+        {
+          "client_id": "743698231818-mh4oglh3ivrb7cunn3f9q1tlvlql6hod.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.tatx.partner",
+            "certificate_hash": "d8f562426f0f41416bbccaee8ecddc17192c3558"
+          }
+        },
+        {
+          "client_id": "743698231818-hddlc7pkinvcsgqo7tcob8qlib5a6qmo.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.tatx.partner",
+            "certificate_hash": "89f8404ba5f6a9860b0aa35b7f3fcba468dfc618"
+          }
+        },
+        {
+          "client_id": "743698231818-1ad9mituifjet9689067q3413hua5vgj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAsaFThGAFCUelFQ_j6YDrvgwcFLyAXBBg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "743698231818-1ad9mituifjet9689067q3413hua5vgj.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "743698231818-63am8f2nb2dokqfu0k6rqjabda2lf5pb.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.tatx.customer"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:743698231818:android:259ddbecc7afa4cd95e5f3",
+        "android_client_info": {
+          "package_name": "com.tatx.user"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "743698231818-nhro03p4f8o07fo6s8bp6vi5274g8uc5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.tatx.user",
+            "certificate_hash": "89f8404ba5f6a9860b0aa35b7f3fcba468dfc618"
+          }
+        },
+        {
+          "client_id": "743698231818-1ad9mituifjet9689067q3413hua5vgj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAsaFThGAFCUelFQ_j6YDrvgwcFLyAXBBg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "743698231818-1ad9mituifjet9689067q3413hua5vgj.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "743698231818-63am8f2nb2dokqfu0k6rqjabda2lf5pb.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.tatx.customer"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:743698231818:android:a3363a6cf4938ce495e5f3",
+        "android_client_info": {
+          "package_name": "tatx.com.checkandchat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "743698231818-3qttuln79dq4pqig67qm9tknad30ckov.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "tatx.com.checkandchat",
+            "certificate_hash": "44619c7606b3dccafe64679444b6a123cb90ad65"
+          }
+        },
+        {
+          "client_id": "743698231818-e9eo1tg5nbshpn27818d2i9ovhd68d8b.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "tatx.com.checkandchat",
+            "certificate_hash": "d8f562426f0f41416bbccaee8ecddc17192c3558"
+          }
+        },
+        {
+          "client_id": "743698231818-a8meq7vhuqqmuochachv2bu8c5i1dsod.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "tatx.com.checkandchat",
+            "certificate_hash": "4fd638d6b0fffa1e004d1eebdadeaaebd79560bf"
+          }
+        },
+        {
+          "client_id": "743698231818-1ad9mituifjet9689067q3413hua5vgj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAsaFThGAFCUelFQ_j6YDrvgwcFLyAXBBg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "743698231818-1ad9mituifjet9689067q3413hua5vgj.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "743698231818-63am8f2nb2dokqfu0k6rqjabda2lf5pb.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.tatx.customer"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
