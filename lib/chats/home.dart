@@ -42,7 +42,7 @@ class HomeChatScreenState extends State<HomeChatScreen> {
   String currentUserToken;
   final FirebaseMessaging firebaseMessaging = FirebaseMessaging();
   final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
-  final GoogleSignIn googleSignIn = GoogleSignIn();
+  //final GoogleSignIn googleSignIn = GoogleSignIn();
 
   bool isLoading = false;
   List<Choice> choices = const <Choice>[
@@ -82,8 +82,8 @@ class HomeChatScreenState extends State<HomeChatScreen> {
     _auth = Provider.of<Auth>(context, listen: false);
     _friendData = Provider.of<UserData>(context, listen: false);
     getdata();
-    // registerNotification();
-    //configLocalNotification();
+//     registerNotification();
+//    configLocalNotification();
   }
 
   void registerNotification() {

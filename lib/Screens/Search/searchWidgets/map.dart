@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:checkandchat/Providers/Auth.dart';
 import 'package:checkandchat/Providers/resturants.dart';
 import 'package:checkandchat/Screens/Search/searchWidgets/item_details/item_details.dart';
+import 'package:geocoding/geocoding.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
@@ -55,13 +56,12 @@ bool isOpened=false;
 //      });
 //  }
   searchChangedNavigate() {
-    Geolocator()
-        .placemarkFromAddress(_textEditingController.text)
+   locationFromAddress(_textEditingController.text)
         .then((res) async {
       _mapController.animateCamera(CameraUpdate.newCameraPosition(
           CameraPosition(
               target:
-                  LatLng(res[0].position.latitude, res[0].position.longitude),
+                  LatLng(res[0].latitude, res[0].longitude),
               zoom: 10.0)));
     });
   }

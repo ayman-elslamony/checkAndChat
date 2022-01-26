@@ -748,10 +748,16 @@ class _ItemDetailsState extends State<ItemDetails> {
                                     itemCount: 5,
                                     itemPadding:
                                         EdgeInsets.symmetric(horizontal: 1.0),
-                                    itemBuilder: (context, _) => Icon(
-                                      Icons.stars,
-                                      color: Color(0xffc62828),
-                                    ),
+                              ratingWidget: RatingWidget(full: Icon(
+                                Icons.stars,
+                                color: Color(0xffc62828),
+                              ), half: Icon(
+                                Icons.stars,
+                                color: Color(0xffc62828),
+                              ), empty: Icon(
+                                Icons.stars,
+                                color: Colors.grey,
+                              )),
                                     unratedColor: Colors.grey,
                                     itemSize: 20,
                                     ignoreGestures: true,
@@ -1207,10 +1213,16 @@ class _ItemDetailsState extends State<ItemDetails> {
                                     itemCount: 5,
                                     itemPadding:
                                         EdgeInsets.symmetric(horizontal: 1.0),
-                                    itemBuilder: (context, _) => Icon(
+                                    ratingWidget: RatingWidget(full: Icon(
                                       Icons.stars,
                                       color: Color(0xffc62828),
-                                    ),
+                                    ), half: Icon(
+                                      Icons.stars,
+                                      color: Color(0xffc62828),
+                                    ), empty: Icon(
+                                      Icons.stars,
+                                      color: Colors.grey,
+                                    )),
                                     unratedColor: Colors.grey,
                                     itemSize: 22,
                                     ignoreGestures: true,
@@ -1358,10 +1370,16 @@ class _ItemDetailsState extends State<ItemDetails> {
                                         itemCount: 5,
                                         itemPadding: EdgeInsets.symmetric(
                                             horizontal: 1.0),
-                                        itemBuilder: (context, _) => Icon(
+                                        ratingWidget: RatingWidget(full: Icon(
                                           Icons.stars,
                                           color: Color(0xffc62828),
-                                        ),
+                                        ), half: Icon(
+                                          Icons.stars,
+                                          color: Color(0xffc62828),
+                                        ), empty: Icon(
+                                          Icons.stars,
+                                          color: Colors.grey,
+                                        )),
                                         unratedColor: Colors.grey,
                                         itemSize: 22,
                                         ignoreGestures: true,

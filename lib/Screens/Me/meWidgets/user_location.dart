@@ -1,6 +1,5 @@
 import 'dart:convert';
-import 'package:geocoder/geocoder.dart';
-import 'package:geocoder/model.dart';
+import 'package:geocoding/geocoding.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 
@@ -31,8 +30,8 @@ TextEditingController _realAddressController =TextEditingController();
   }
   GoogleMapController _mapController;
   searchChangedNavigate(){
-    Geolocator().placemarkFromAddress(_textEditingController.text).then((res) async{
-      _mapController.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(target: LatLng(res[0].position.latitude,res[0].position.longitude),zoom: 10.0)));
+    locationFromAddress(_textEditingController.text).then((res) async{
+      _mapController.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(target: LatLng(res[0].latitude,res[0].longitude),zoom: 10.0)));
     });
   }
   final CameraPosition _initialCamera = CameraPosition(target: LatLng(30.03,31.23), zoom: 18);
@@ -91,12 +90,11 @@ TextEditingController _realAddressController =TextEditingController();
                 Marker(markerId: MarkerId('1'), icon: customIcon, position: pos);
                 setState(() {
                   markers.add(m);
-                });final coordinates =
-                new Coordinates(pos.latitude, pos.longitude);
+                });
                 var addresses =
-                    await Geocoder.local.findAddressesFromCoordinates(coordinates);
+                await placemarkFromCoordinates(pos.latitude,pos.longitude);
                 setState(() {
-                  _realAddressController.text =addresses.first.addressLine;
+                  _realAddressController.text =addresses.first.street;
                 });
                 showDialog(
                     context: context,

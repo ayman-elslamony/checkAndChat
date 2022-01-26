@@ -247,10 +247,16 @@ class _NearByState extends State<NearBy> {
                         allowHalfRating: true,
                         itemCount: 5,
                         itemPadding: EdgeInsets.symmetric(horizontal: 0.5),
-                        itemBuilder: (context, _) => Icon(
+                        ratingWidget: RatingWidget(full: Icon(
                           Icons.stars,
                           color: Color(0xffc62828),
-                        ),
+                        ), half: Icon(
+                          Icons.stars,
+                          color: Color(0xffc62828),
+                        ), empty: Icon(
+                          Icons.stars,
+                          color: Colors.grey,
+                        )),
                         unratedColor: Colors.grey,
                         itemSize: 22,
                         ignoreGestures: true,

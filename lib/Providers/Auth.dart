@@ -6,8 +6,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_facebook_login/flutter_facebook_login.dart';
-import 'package:geocoder/geocoder.dart';
-import 'package:geocoder/model.dart';
+import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -73,14 +72,13 @@ String get myAddress{
    try{
      Position position = await Geolocator()
          .getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
-     final coordinates = new Coordinates(position.latitude, position.longitude);
      _currentLatLng = LatLng(position.latitude,position.longitude);
      var addresses =
-     await Geocoder.local.findAddressesFromCoordinates(coordinates);
-     List<String> first = addresses.first.addressLine.split(',');
+     await placemarkFromCoordinates(position.latitude,position.longitude);
+    String first = addresses.first.street;
      //,${first[1]},${first[(first.length-1)]}
      //String add = '${first[0]}';
-     _address = first[0];
+     _address =first;
 
      if(_currentLatLng != null && _address !=null){
        final userLocation =json.encode({

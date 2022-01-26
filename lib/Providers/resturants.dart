@@ -121,7 +121,7 @@ class Categorys with ChangeNotifier {
   double distance = 0.0;
 
   GoogleMapsPlaces _resturantsOnGoogle =
-      GoogleMapsPlaces(apiKey: 'AIzaSyCqOxzWfXHCTM_9ri4eevx7VRvVcKOjH8I');
+      GoogleMapsPlaces(apiKey: 'AIzaSyB66Kj-kMInrqGRl1dY-AE1eZ3ZRJ5AfAY');
   String _typeOfCategory = '';
   final databaseReference = Firestore.instance;
   Future<FirebaseUser> firebaseAuth = FirebaseAuth.instance.currentUser();
@@ -1751,6 +1751,7 @@ class Categorys with ChangeNotifier {
       }
       final result = await _resturantsOnGoogle
           .searchNearbyWithRadius(location, radius, type: type.trim());
+      print(result.errorMessage);
       if (result.status == 'OK') {
         if (result.results != null) {
           result.results.forEach((rest) async {

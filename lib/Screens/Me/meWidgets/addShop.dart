@@ -2,8 +2,7 @@ import 'dart:io';
 import 'package:checkandchat/Screens/Me/meWidgets/user_location.dart';
 import 'package:checkandchat/generated/locale_keys.g.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:geocoder/geocoder.dart';
-import 'package:geocoder/model.dart';
+import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:checkandchat/Providers/user_data.dart';
 import 'package:flutter/material.dart';
@@ -200,13 +199,11 @@ class _AddShopState extends State<AddShop> {
     Future<String> _getLocation() async {
       Position position = await Geolocator()
           .getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
-      final coordinates =
-      new Coordinates(position.latitude, position.longitude);
       var addresses =
-      await Geocoder.local.findAddressesFromCoordinates(coordinates);
+      await placemarkFromCoordinates(position.latitude,position.longitude);
       lat = position.latitude.toString();
       lng = position.longitude.toString();
-      return addresses.first.addressLine;
+      return addresses.first.street;
     }
 
     void _getUserLocation() async {

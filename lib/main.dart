@@ -29,6 +29,7 @@ GetIt getIt = GetIt.instance;
 
 void main(){
   WidgetsFlutterBinding.ensureInitialized();
+  //await Firebase.initializeApp();
   getIt.registerSingleton<Auth>(Auth());
 
     runApp(EasyLocalization(
