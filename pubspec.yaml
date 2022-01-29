@@ -36,40 +36,33 @@ dependencies:
   firebase_auth: ^0.16.1
   google_sign_in: ^4.4.4
   flutter_facebook_login: ^3.0.0
-  firebase_database: ^3.1.6
   firebase_storage: ^3.1.5
   animated_text_kit: 2.4.1
-  shared_preferences: ^0.5.4
-  cloud_firestore: ^0.13.7
+  shared_preferences: ^0.5.8
+  cloud_firestore: ^0.13.5
   firebase_core: ^0.4.5
-  flutter_google_places: ^0.2.5
+  flutter_google_places: ^0.1.4+1
   get_it: ^4.0.2
   flutter_pusher: ^1.0.2
   flutter_country_picker: ^0.1.6
   flutter_time_picker_spinner: ^1.0.6
   flutter_launcher_icons: ^0.8.0
   flutter_polyline_points: ^0.2.4
-  fluttertoast: ^3.1.0
+  fluttertoast: ^4.0.0
   cached_network_image: 2.0.0-rc.1
-  firebase_messaging: 6.0.13
-  flutter_local_notifications: 1.4.0
-  device_preview: ^0.4.8
-  intl: ^0.16.0
+  firebase_messaging: ^6.0.9
+  flutter_local_notifications: ^1.4.0
+
+
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_localizations:
     sdk: flutter
-  intl_translation: ^0.17.9
-  rxdart: ^0.24.1
-  args: ^1.5.2
-  path: ^1.6.4
   easy_localization: ^2.3.2
   easy_localization_loader: ^0.0.2
-   # git: https://github.com/aissat/easy_localization_loader.git
-#dependency_overrides:
-#  intl: ^0.16.1
+
 
 flutter_icons:
   image_path: "images/appIcon.png"
