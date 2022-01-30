@@ -38,24 +38,22 @@ dependencies:
   flutter_facebook_login: ^3.0.0
   firebase_storage: ^3.1.5
   animated_text_kit: 2.4.1
-  shared_preferences: ^0.5.8
+  shared_preferences: 0.5.7
   cloud_firestore: ^0.13.5
   firebase_core: ^0.4.5
   flutter_google_places: ^0.1.4+1
   get_it: ^4.0.2
-  flutter_pusher: ^1.0.2
   flutter_country_picker: ^0.1.6
   flutter_time_picker_spinner: ^1.0.6
-  flutter_launcher_icons: ^0.8.0
-  flutter_polyline_points: ^0.2.4
+
   fluttertoast: ^4.0.0
   cached_network_image: 2.0.0-rc.1
-  firebase_messaging: ^6.0.9
-  flutter_local_notifications: ^1.4.0
+
 
 
 
 dev_dependencies:
+  flutter_launcher_icons: ^0.8.0
   flutter_test:
     sdk: flutter
   flutter_localizations:

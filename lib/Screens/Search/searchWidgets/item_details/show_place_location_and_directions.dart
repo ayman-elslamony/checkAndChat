@@ -1,14 +1,14 @@
-import 'dart:convert';
+
 import 'package:checkandchat/Providers/Auth.dart';
 import 'package:checkandchat/Providers/resturants.dart';
 import 'package:checkandchat/Screens/Search/searchWidgets/item_details/item_details.dart';
-import 'package:http/http.dart' as http;
+
 import 'package:flutter/material.dart';
-import 'package:geolocator/geolocator.dart';
+
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
-import 'package:toast/toast.dart';
-import 'package:flutter_polyline_points/flutter_polyline_points.dart';
+
+
 
 class ShowSpecificPlaceOnMap extends StatefulWidget {
   Category category;

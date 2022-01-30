@@ -2,7 +2,6 @@ import 'dart:async';
 import 'package:checkandchat/Providers/Auth.dart';
 import 'package:checkandchat/Providers/user_data.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_pusher/pusher.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import '../models/message_model.dart';
@@ -26,9 +25,8 @@ class _ChatScreenState extends State<ChatScreen> {
   static DateTime time = DateTime.now();
   String formattedDate = DateFormat('kk:mm:ss \n EEE d MMM').format(time);
 
-  Event lastEvent;
+
   String lastConnectionState;
-  Channel channel;
   String userId;
   List<Message> _mess = [];
   bool _isLoading = true;
