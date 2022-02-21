@@ -7,6 +7,9 @@ It is an e-commerce application that helps users to find nearby places of servic
 * firebase as backend. 
 * google map and google places.
 
+### For using app:
+ [download android apk](https://drive.google.com/file/d/1_2eZsU3NSJcqlnVocgdcOyZbODGe_6fJ/view?usp=sharing)
+ 
 ## Features
 
 * Allow the user to view all places of services according to the user's location.
